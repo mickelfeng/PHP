@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="reference">
+	<title>Language Reference</title>
+	<section id="stdin">
+		<title>php://stdin &amp; php://stdout</title>
+		<screen>
+		<![CDATA[
+$ cat test.php
+#!/usr/bin/php
+<?php
+
+$handle = fopen("php://stdin", "r");
+
+while (!feof($handle)) {
+    $buffer = fgets($handle);
+    print($buffer);
+}
+fclose($handle);
+		]]>
+		</screen>
+		<screen>
+$ cat /etc/passwd | ./test.php
+		</screen>
+	</section>
+	<section id="exception">
+		<title>Exception</title>
+		<screen>
+		<![CDATA[
+$ cat exception1.php
+<?php
+
+function test1(){
+	throw new Exception("Test1 exception!");
+}
+
+try {
+	test1();
+}
+catch(Exception $e){
+	die( $e->__toString() );
+}
+
+
+$ php exception1.php
+exception 'Exception' with message 'Test1 exception!' in /home/neo/workspace/example/PHP/exception.php:4
+Stack trace:
+#0 /home/neo/workspace/example/PHP/exception.php(8): test1()
+#1 {main}
+		]]>
+		</screen>
+
+		<screen>
+		<![CDATA[
+$ cat exception2.php
+<?php
+
+class MyException extends Exception {}
+function test2(){
+	throw new MyException('Test2 exception');
+}
+try {
+	test2();
+}
+catch(Exception $e){
+	die( $e->__toString() );
+}
+
+
+$ php exception2.php
+exception 'MyException' with message 'Test2 exception' in /home/neo/workspace/example/PHP/exception2.php:5
+Stack trace:
+#0 /home/neo/workspace/example/PHP/exception2.php(8): test2()
+#1 {main}
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+$ cat exception.php
+<?php
+class FileException extends Exception {}
+class DataException extends Exception {}
+
+function test1(){
+	throw new FileException("Test1 exception!");
+}
+
+function test2(){
+	throw new DataException('Test2 exception');
+}
+function test3(){
+	throw new Exception('Test3 exception');
+}
+
+try {
+	test1();
+	test2();
+	test3();
+}
+catch(FileException $e){
+    print( $e->__toString() );
+}
+catch(DataException $e){
+    print( $e->__toString() );
+}
+catch(Exception $e){
+	print( $e->__toString() );
+}
+		]]>
+		</screen>
+	</section>
+</chapter>

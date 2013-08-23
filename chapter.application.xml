@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: chapter.application.xml 662 2013-08-14 02:46:24Z netkiller $ -->
+<chapter id="php.application">
+	<title>PEAR - PHP Extension and Application Repository</title>
+	<section id="pear">
+		<title>PEAR 使用说明</title>
+		<section id="php.pear">
+			<title>php-pear 安装</title>
+			<screen>
+$ sudo apt-get install php-pear
+			</screen>
+		</section>
+		<section>
+			<title>channel-update</title>
+			<para>channel-update</para>
+			<command>pear channel-update pear.php.net</command>
+			<para>list-all</para>
+			<command>pear list-all</command>
+		</section>
+		<section>
+			<title>install/uninstall</title>
+			<para>install</para>
+			<command>pear install Packages</command>
+			<para>uninstall</para>
+			<command>pear uninstall Packages</command>
+		</section>
+	</section>
+	<section>
+		<title>Pyrus</title>
+		<screen>
+wget http://pear2.php.net/pyrus.phar
+
+# Set where to install packages:
+$ php pyrus.phar mypear ~/src/my-project/vendor
+# Install a package:
+$ php pyrus.phar install PEAR2_HTTP_Request
+# List installed packages:
+$ php pyrus.phar list-packages
+		</screen>
+	</section>
+	<section>
+		<title>Pirum is a simple PEAR Channel Server Manager</title>
+		<ulink url="http://pirum.sensiolabs.org/">http://pirum.sensiolabs.org/</ulink>
+		<screen>
+$ pear channel-discover pear.pirum-project.org
+$ pear install pirum/Pirum
+
+$ php pirum
+		</screen>
+	</section>
+	<section id="php.phpunit">
+		<title>PHPUnit - Unit testing framework for PHP</title>
+		<procedure>
+			<title>PHPUnit2</title>
+			<step>
+				<para>install</para>
+				<screen>
+pear install PHPUnit2
+				</screen>
+			</step>
+			<step>
+				<para>phpunit your.php</para>
+			</step>
+		</procedure>
+	</section>
+	<section id="php-xml-rss">
+		<title>XML_RSS</title>
+		<para>http://pear.php.net/package/XML_RSS</para>
+		<screen>
+$ sudo apt-get install php-xml-rss
+		</screen>
+		<example>
+			<title>RSS.php</title>
+			<programlisting>
+			<![CDATA[
+ <?php
+require_once "XML/RSS.php";
+
+$rss = new XML_RSS("http://rss.slashdot.org/Slashdot/slashdot");
+$rss->parse();
+
+echo "<h1>Headlines from <a href=\"http://slashdot.org\">Slashdot</a></h1>\n";
+echo "<ul>\n";
+
+foreach ($rss->getItems() as $item) {
+    echo "<li><a href=\"" . $item['link'] . "\">" . $item['title'] . "</a></li>\n";
+}
+
+echo "</ul>\n";
+?>
+			]]>
+			</programlisting>
+		</example>
+	</section>
+	<section id="extension.propel">
+		<title>Propel - smart, easy object persistence</title>
+			<para>ORM （ object relation mapping ）</para>
+			<para>即将数据库表映射成对像，实现通过实例化对像来访问数据库</para>
+			<para>本文主要介绍Propel - smart, easy object persistence</para>
+		<section>
+			<title>环境配置</title>
+			<para>配置php.ini</para>
+			<para>在php.ini文件中加入：</para>
+			<para>extension=php_pdo.dll</para>
+		</section>
+		<section>
+			<title>PEAR Installer</title>
+			<screen>
+$> pear channel-discover pear.phpdb.org
+$> pear install phpdb/propel_generator
+$> pear install phpdb/propel_runtime
+			</screen>
+			<para>Adding Channel</para>
+			<screen>
+D:\>pear channel-discover pear.phpdb.org
+Adding Channel "pear.phpdb.org" succeeded
+Discovery of channel "pear.phpdb.org" succeeded
+			</screen>
+			<para>propel_generator 安装日志</para>
+			<screen>
+D:\php-5.1.4-Win32>pear install phpdb/propel_generator
+phpdb/propel_generator requires package "channel://pear.phing.info/phing" (versi
+on >= 2.2.0)
+downloading creole-1.1.0.tgz ...
+Starting to download creole-1.1.0.tgz (92,633 bytes)
+.....................done: 92,633 bytes
+install ok: channel://pear.phpdb.org/creole-1.1.0
+			</screen>
+			<para>propel_runtime 安装日志</para>
+			<screen>
+D:\php-5.1.4-Win32>pear install phpdb/propel_runtime
+downloading propel_runtime-1.2.0.tgz ...
+Starting to download propel_runtime-1.2.0.tgz (45,959 bytes)
+.............done: 45,959 bytes
+install ok: channel://pear.phpdb.org/propel_runtime-1.2.0
+
+D:\php-5.1.4-Win32>
+			</screen>
+		</section>
+	</section>
+	<section id="extension.plua">
+		<title>Lua for PHP extension</title>
+		<para><ulink url="http://code.google.com/p/plua/" /></para>
+	</section>
+	<section>
+		<title>libuv php extension</title>
+		<para>https://github.com/chobie/php-uv</para>
+	</section>
+</chapter>
+
+<chapter id="app">
+	<title>Application</title>
+	<section id="php.phpmailer">
+		<title>phpmailer</title>
+		<programlisting>
+		<![CDATA[
+<?php
+/**
+* Simple example script using PHPMailer with exceptions enabled
+* @package phpmailer
+* @version $Id: chapter.application.xml 662 2013-08-14 02:46:24Z netkiller $
+*/
+
+require '../class.phpmailer.php';
+
+try {
+        $mail = new PHPMailer(true); //New instance, with exceptions enabled
+
+        $body             = file_get_contents('contents.html');
+        $body             = preg_replace('/\\\\/','', $body); //Strip backslashes
+
+        $mail->IsSMTP();                           // tell the class to use SMTP
+        $mail->SMTPAuth   = true;                  // enable SMTP authentication
+        $mail->Port       = 25;                    // set the SMTP server port
+        $mail->Host       = "mail.yourdomain.com"; // SMTP server
+        $mail->Username   = "name@domain.com";     // SMTP server username
+        $mail->Password   = "password";            // SMTP server password
+
+        $mail->IsSendmail();  // tell the class to use Sendmail
+
+        $mail->AddReplyTo("name@domain.com","First Last");
+
+        $mail->From       = "name@domain.com";
+        $mail->FromName   = "First Last";
+
+        $to = "someone@example...com";
+
+        $mail->AddAddress($to);
+
+        $mail->Subject  = "First PHPMailer Message";
+
+        $mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
+        $mail->WordWrap   = 80; // set word wrap
+
+        $mail->MsgHTML($body);
+
+        $mail->IsHTML(true); // send as HTML
+
+        $mail->Send();
+        echo 'Message has been sent.';
+} catch (phpmailerException $e) {
+        echo $e->errorMessage();
+}
+		]]>
+		</programlisting>
+	</section>
+	&chapter.php.soap.xml;
+	<section id="app.fun">
+		<title>php function check</title>
+		<programlisting>
+		<![CDATA[
+#!/bin/bash
+LOGFILE=/tmp/my.log
+echo > $LOGFILE
+for helper in `ls -1 class/helper/`
+do
+    echo ========================== $helper ============================ >> $LOGFILE
+    class=`grep '^class' class/helper/$helper | awk -F ' ' '{print $2}'`
+    for fun in `grep 'public function [a-zA-Z]' class/helper/$helper | awk -F ' ' '{print $3}' | awk -F '(' '{print $1}'`
+    do
+        count=`grep -r "$class->$fun(" *|wc -w`
+        if [ $count == 0 ]; then
+               echo "[ unused ] $class->$fun" >> $LOGFILE
+        else
+
+               echo "[  used  ] $class->$fun" >> $LOGFILE
+        fi
+        echo "[`date`] [$helper] $class->$fun (checked: $count)"
+    done
+done
+		]]>
+		</programlisting>
+	</section>
+	<section id="whois">
+		<title> whois 域名查询</title>
+ 		<programlisting>
+ 		<![CDATA[
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>whois</title>
+</head>
+<body>
+<fieldset>
+<legend>whois</legend>
+<form name="form1" method="post" action="<? $PHP_SELF ?>">
+<input type="text" name="domainname">
+.cn
+<input type="submit" name="Submit" value="查询">
+</form>
+</fieldset>
+
+查询域名：
+<?echo $domainname;?>
+.cn
+<?php
+$fp = fsockopen ("whois.cnnic.cn", 43 , $errno, $errstr, 30);
+if (!$fp) {
+echo "$errstr ($errno)<br>\n";
+} else {
+fputs ($fp, "$domainname".".cn"."\r\n");
+echo "<pre>";
+while (!feof($fp)) {
+
+$data = fgets ($fp,1024);
+$data = str_replace("no matching record", "该域名没有被注册\n<a href='http://www.cnwwwcn.com'>我想注册该域名</a>", $data);
+/*
+$data = fgetc ($fp);
+
+if($data == "\n"){
+echo "<br>";
+}
+*/
+echo $data;
+//no matching record
+}
+echo "</pre>";
+fclose ($fp);
+}
+?>
+</body>
+</html>
+		]]>
+ 		</programlisting>
+	</section>
+	<!--
+	<section id="phprpc">
+		<title>phprpc</title>
+		<para>http://www.phprpc.org</para>
+	</section>
+	 -->
+	<section id="react">
+		<title>React - Event-driven, non-blocking I/O with PHP. (Node.PHP)</title>
+		<para>http://reactphp.org/</para>
+		<programlisting>
+AN EXAMPLE: WEBSERVER
+
+This simple web server written in React responds with "Hello World" for every request.
+
+require 'vendor/autoload.php';
+
+$app = function ($request, $response) {
+    $response->writeHead(200, array('Content-Type' => 'text/plain'));
+    $response->end("Hello World\n");
+};
+
+$loop = React\EventLoop\Factory::create();
+$socket = new React\Socket\Server($loop);
+$http = new React\Http\Server($socket, $loop);
+
+$http->on('request', $app);
+echo "Server running at http://127.0.0.1:1337\n";
+
+$socket->listen(1337);
+$loop->run();
+To install, just run this command:
+
+% composer init --require=react/http:0.3.* -n
+% composer install
+To run the server, put the code into a file example.php and execute it with the php program:
+
+% php example.php
+Server running at http://127.0.0.1:1337
+		</programlisting>
+	</section>
+</chapter>

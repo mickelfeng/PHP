@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: chapter.debug.xml 447 2012-08-08 10:34:36Z netkiller $ -->
+<!-- $Author: netkiller $ -->
+<chapter id="debug">
+	<title>Debug</title>
+	<section id="firephp">
+		<title>FirePHP</title>
+		<ulink url="http://www.firephp.org/" />
+	</section>
+
+
+</chapter>

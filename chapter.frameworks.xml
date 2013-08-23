@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="frameworks">
+	<title>Frameworks</title>
+	<para><ulink url="http://www.phpframeworks.com/">PHP Frameworks 比较</ulink></para>
+<section id="frameworks.codeigniter">
+	<title>CodeIgniter - Open source PHP web application framework</title>
+	<para>homepage: http://www.codeigniter.com/</para>
+	<para>下载解压后复制到 /usr/share/php/</para>
+	<screen>
+	<![CDATA[
+$ chmod 755 -R /usr/share/php/CodeIgniter_2.0.0
+$ ln -s /usr/share/php/CodeIgniter_2.0.0 /usr/share/php/CodeIgniter
+$ ls /usr/share/php
+CodeIgniter Smarty
+	]]>
+	</screen>
+	<para>rewrite</para>
+	<para>lighttpd 为例</para>
+	<screen>
+	<![CDATA[
+url.rewrite = ( "^/(.+)" => "/index.php/$1"
+	]]>
+	</screen>
+	<section id="codeigniter.nginx">
+		<title>Nginx</title>
+		<screen>
+		<![CDATA[
+	location / {
+        root   /www/mydomain.com/report.mydomain.com/htdocs;
+        index  index.php index.html;
+
+        if ($request_filename !~ (js|css|images|robots/.txt|index/.php) ) {
+                rewrite ^/(.*)$ /index.php/$1 last;
+                break;
+        }
+
+    }
+
+    location ~* ^.+.(jpg|jpeg|gif|css|png|js|ico|xml)$ {
+        access_log        off;
+        expires           7d;
+    }
+
+    location ~ \.php$ {
+        if ($request_filename !~ (index/.php) ) {
+                return 404;
+        }
+    }
+
+	location ~ /index.php/ {
+        root           html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  /www/mydomain.com/report.mydomain.com/htdocs/index.php;
+        include        fastcgi_params;
+    }
+		]]>
+		</screen>
+
+		<screen>
+		<![CDATA[
+	location / {
+
+        root  /www/www.example.com/public;
+        index  index.php;
+
+        # this serves static files that exist without running other rewrite tests
+        if (-f $request_filename) {
+            expires 30d;
+            break;
+        }
+
+        # this sends all non-existing file or directory requests to index.php
+        if (!-e $request_filename) {
+                rewrite ^(.+)$ /index.php?$1 last;
+        }
+    }
+
+    location ~* ^.+.(jpg|jpeg|gif|css|png|js|ico|xml)$ {
+        access_log        off;
+        expires           30d;
+        root /www/www.example.com/public;
+    }
+
+
+
+    # pass the *.php scripts to php5-fpm listening on tcp port 9000 #
+    location ~ \.php$ {
+        root  /www/www.example.com/public;
+        index  index.php;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SERVER_NAME $http_host;
+        fastcgi_param PATH_INFO $fastcgi_script_name;
+        fastcgi_ignore_client_abort on;
+    }
+
+    ## Disable viewing .htaccess & .htpassword
+    location ~ /\.ht {
+        deny  all;
+    }
+		]]>
+		</screen>
+	</section>
+	<section id="PHP_CodeSniffer">
+		<title>PHP_CodeSniffer</title>
+		<ulink url="http://pear.php.net/manual/zh/package.php.php-codesniffer.intro.php">http://pear.php.net/manual/zh/package.php.php-codesniffer.intro.php</ulink>
+		<screen>
+Easy Install
+Not sure? Get more info.
+pear install PHP_CodeSniffer-1.3.5
+
+Pyrus Install
+Try PEAR2's installer, Pyrus.
+
+php pyrus.phar install pear/PHP_CodeSniffer-1.3.5
+		</screen>
+	</section>
+</section>
+<section id="frameworks.fuel">
+	<title>Fuel PHP</title>
+	<para>Fuel PHP 源自 CodeIgniter</para>
+	<section>
+		<title>框架安装</title>
+		<para>http://fuelphp.com/</para>
+		<section id="oil">
+			<title>oil</title>
+			<screen>
+			<![CDATA[
+$ curl get.fuelphp.com/oil | sh
+
+$ oil create <project_name>
+			]]>
+			</screen>
+			<para>zip包安装</para>
+			<screen>
+
+$ unzip fuelphp-v1.1.zip
+
+$ ls /www/fuelphp
+CHANGELOG.md  docs  fuel  oil  public  README.md
+			</screen>
+		</section>
+		<section>
+			<title>Apache</title>
+			<screen>
+			<![CDATA[
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+
+    RewriteBase /public
+
+    RewriteRule ^(/)?$ index.php/$1 [L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>Nginx</title>
+			<screen>
+$ cat /etc/nginx/sites-available/fuel
+
+server {
+        #listen   80; ## listen for ipv4; this line is default and implied
+        #listen   [::]:80 default ipv6only=on; ## listen for ipv6
+
+        root /www/fuelphp/public;
+        index index.html index.php;
+
+        # Make site accessible from http://localhost/
+        server_name localhost;
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to index.html
+                try_files $uri $uri/ /index.html;
+        }
+
+        #location /doc {
+        #       root /usr/share;
+        #       autoindex on;
+        #       allow 127.0.0.1;
+        #       deny all;
+        #}
+
+        #location /images {
+        #       root /usr/share;
+        #       autoindex off;
+        #}
+
+        #error_page 404 /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        #error_page 500 502 503 504 /50x.html;
+        #location = /50x.html {
+        #       root /usr/share/nginx/www;
+        #}
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #       proxy_pass http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ \.php$ {
+                fastcgi_pass 127.0.0.1:9000;
+                fastcgi_index index.php;
+                include fastcgi_params;
+        }
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #       deny all;
+        #}
+}
+			</screen>
+		</section>
+	</section>
+
+</section>
+<section id="Kohana">
+	<title>Kohana</title>
+	<para>Kohana 源自 CodeIgniter</para>
+	<para><ulink url="http://kohanaframework.org/" /></para>
+</section>
+<section id="frameworks.yii">
+	<title>Yii</title>
+</section>
+	<section id="frameworks.zend_framework">
+		<title>Zend Framework</title>
+		<section>
+			<title>Install Zend Framework</title>
+			<screen>
+			<![CDATA[
+sudo mv ZendFramework-1.10.2 /usr/local/share/
+sudo ln -s
+/usr/local/share/ZendFramework-1.10.2 /usr/local/share/zend
+			]]>
+			</screen>
+			<para>~/.bashrc</para>
+			<para>alias zf.sh=path/to/ZendFramework/bin/zf.sh</para>
+			<screen>
+			<![CDATA[
+alias zf.sh=/usr/local/share/zend/bin/zf.sh
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>Create Your Project</title>
+			<screen>
+			<![CDATA[
+$ zf.sh create project quickstart
+			]]>
+			</screen>
+			<para></para>
+			<screen>
+			<![CDATA[
+$ cd quickstart/library; ln -s
+/usr/local/share/zend/library/Zend .
+			]]>
+			</screen>
+			<para>Rewrite</para>
+			<para>.htaccess内容如下：</para>
+			<screen>
+			<![CDATA[
+RewriteEngine on
+RewriteRule !".(js|ico|gif|jpg|png|css)$ index.php
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>Create a virtual host</title>
+			<screen>
+		<![CDATA[
+<VirtualHost *:80>
+    ServerName quickstart.local
+    DocumentRoot /path/to/quickstart/public
+
+    SetEnv APPLICATION_ENV "development"
+
+    <Directory /path/to/quickstart/public>
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
+		]]>
+			</screen>
+			<para>/etc/hosts</para>
+			<screen>
+			<![CDATA[
+127.0.0.1 quickstart.local
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>Database</title>
+			<section>
+				<title>MySQL</title>
+				<screen>
+			<![CDATA[
+zf configure dbadapter "adapter=Pdo_Mysql&username=test&password=test&dbname=test"
+			]]>
+				</screen>
+			</section>
+			<section>
+				<title>SQLite</title>
+				<screen>
+		<![CDATA[
+$ sudo apt-get install php5-sqlite
+mkdir -p data/db; chmod -R a+rwX data
+		]]>
+				</screen>
+				<screen>
+		<![CDATA[
+zf.sh configure db-adapter \
+'adapter=PDO_SQLITE&dbname=APPLICATION_PATH "/../data/db/guestbook.db"' \
+production
+
+zf.sh configure db-adapter \
+'adapter=PDO_SQLITE&dbname=APPLICATION_PATH "/../data/db/guestbook-testing.db"' \
+testing
+
+zf.sh configure db-adapter \
+'adapter=PDO_SQLITE&dbname=APPLICATION_PATH "/../data/db/guestbook-dev.db"' \
+development
+		]]>
+				</screen>
+			</section>
+		</section>
+		<section>
+			<title>zf.sh</title>
+
+			<section>
+				<title>controller</title>
+				<screen>
+		<![CDATA[
+zf create controller Guestbook
+		]]>
+				</screen>
+				<section>
+					<title>action</title>
+					<screen>
+			<![CDATA[
+	zf create action sign Guestbook
+			]]>
+					</screen>
+				</section>
+			</section>
+			<section>
+				<title>model</title>
+				<screen>
+		<![CDATA[
+zf create model Guestbook
+		]]>
+				</screen>
+				<section>
+					<title>db-table</title>
+					<screen>
+			<![CDATA[
+zf create db-table Guestbook guestbook
+			]]>
+					</screen>
+				</section>
+			</section>
+
+			<section>
+				<title>layout</title>
+				<screen>
+		<![CDATA[
+zf enable layout
+		]]>
+				</screen>
+			</section>
+			<section>
+				<title>form</title>
+				<screen>
+		<![CDATA[
+zf create form Guestbook
+		]]>
+				</screen>
+			</section>
+		</section>
+		<section>
+			<title>Smarty</title>
+			<screen>
+			<![CDATA[
+<?php
+
+//打开错误提示
+
+error_reporting(E_ALL|E_STRICT);
+
+//设定时区
+
+date_default_timezone_set("Asia/Shanghai");
+
+//指明引用文件的路径
+
+set_include_path('.'.PATH_SEPARATOR.'./library'.PATH_SEPARATOR.'./app/model/'.PATH_SEPARATOR.get_include_path());
+
+//必须手动加载Loader.php
+
+include "Zend/Loader.php";
+
+//自动加载类，使用时，直接实例化使用
+
+function __autoload($class){
+
+    Zend_Loader::loadClass($class);
+
+}
+
+   //getInstance()方法用来获取前端控制器实例
+
+   $frontController = Zend_Controller_Front::getInstance();
+
+   //设定前端路由器的工作目录，即cotroller
+
+   $frontController->setControllerDirectory(array("default"=>"app/controller"));
+
+   //抛出异常
+
+   $frontController->throwExceptions(true);
+
+   //设置基地址,方便以后url的跳转用户,注意，区分大小写！
+
+   $frontController->setBaseUrl("/phpzend");
+
+//使用smarty模版需关闭本身的视图助手.
+
+$frontController->setParam("noViewRenderer", true);
+
+       // 关闭错误提示，发生请求错误时候，转到ErrorController的errorAction控制器
+
+//$frontController->throwExceptions(false);
+
+//对。。进行注册
+
+Zend_Registry::set("font", $frontController);
+
+//------------配置Smarty模版 ----------------
+
+include "smarty/Smarty.class.php";
+
+/**
+
+* 对smarty模版进行初始化
+
+**/
+
+$views = new Smarty();
+
+//$views->left_delimiter = "{{";
+
+//$views->right_delimiter = "}}";
+
+$views->compile_dir = "app/template_c";
+$views->cache_dir = "app/template_c/cache_c";
+$views->template_dir = "app/template";
+function smarty_block_dynamic($param,$content,&$views)
+{
+      return $content;
+}
+
+$views->register_block("dynamic","smarty_block_dynamic",false);
+
+Zend_Registry::set("views", $views);
+
+//开始运行程序
+
+$frontController->dispatch();
+			]]>
+			</screen>
+			<para></para>
+			<screen>
+			<![CDATA[
+<?php
+
+   //控制器层
+
+   class IndexController extends Zend_Controller_Action{
+
+     var $views;   /*模板对象*/
+
+     var $data;    /*传递模版变量的对象*/
+
+      function init()
+
+      {
+
+             //拿回注册过的对象
+
+             $this->views = Zend_Registry::get("views");
+
+    }
+
+      function indexAction()
+
+      {
+
+             //定义模版显示的变量
+
+             $data['title']="hello world";
+
+             //传递变量到模版
+
+             $this->views->assign($data);
+
+             //显示模版
+
+             $this->views->display("index/index.tpl");
+
+                       echo "<p>in IndexController::indexAction()</p>";
+
+    }
+
+      function addAction()
+
+      {
+
+      }
+
+}
+			]]>
+			</screen>
+		</section>
+	</section>
+
+</chapter>

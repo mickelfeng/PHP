@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: chapter.php.function.xml 621 2013-06-17 10:08:51Z netkiller $ -->
+<chapter id="php.string">
+	<title>String 字符串操作</title>
+	<section>
+		<title>英文大小写</title>
+		<screen>
+1.将字符串转换成小写
+
+strtolower(): 该函数将传入的字符串参数所有的字符都转换成小写,并以小定形式放回这个字符串
+
+2.将字符转成大写
+
+strtoupper(): 该函数的作用同strtolower函数相反,是将传入的字符参数的字符全部转换成大写,并以大写的形式返回这个字符串.用法同strtolowe()一 样.
+
+3.将字符串首字符转换成大写
+
+ucfirst(): 该函数的作用是将字符串的第一个字符改成大写,该函数返回首字符大写的字符串.用法同strtolowe()一样.
+
+
+4.将字符串每个单词的首字符转换成大写
+
+ucwords(): 该函数将传入的字符串的每个单词的首字符变成大写.如"hello world",经过该函数处理后,将返回"Hello Word".用法同strtolowe()一样.
+
+		</screen>
+	</section>
+	<section id="str_replace">
+		<title>str_replace</title>
+		<screen>
+$search  = array('one', 'two', 'three');
+$replace = array('1',  '2', '3']);
+$content =  str_replace($search, $replace, $file_tpl);
+		</screen>
+	</section>
+</chapter>
+<chapter id="php.array">
+	<title>Array 数组</title>
+	<para>数据相关函数</para>
+	<section>
+		<title>删除数组元素</title>
+		<screen>
+$a[]="a1";
+$a[]="a2";
+$a[]="a3";
+print_r($a);
+unset($a[1]);
+print_r($a);
+		</screen>
+	</section>
+	<section>
+		<title>数组与字符串操作</title>
+		<para>implode(separator,array)</para>
+		<screen>
+		<![CDATA[
+<?php
+$arr = array('Hello','World!');
+echo implode(" ",$arr);
+?>
+		]]>
+		</screen>
+		<para>explode(separator,string,limit)</para>
+		<screen>
+		<![CDATA[
+<?php
+$str = "Hello world!";
+print_r (explode(" ",$str));
+?>
+		]]>
+		</screen>
+	</section>
+</chapter>
+<chapter id="php.function">
+	<title>Function</title>
+	<section>
+		<title>列出所有function</title>
+		<programlisting>
+		<![CDATA[
+<?php
+
+$extensions = get_loaded_extensions();
+foreach($extensions as $each_ext)
+{
+	echo "\t<keyword>$each_ext, ";
+	$ext_funcs = get_extension_funcs($each_ext);
+	foreach($ext_funcs as $func)
+	{
+	   echo "$func, ";
+	}
+	echo "</keyword>\r\n";
+}
+?>
+		]]>
+		</programlisting>
+	</section>
+	<section id="fun.php.ini">
+		<title> php.ini </title>
+		<section>
+			<title>ini_set</title>
+			<screen>
+@ini_set('memory_limit',          '16M');
+			</screen>
+		</section>
+		<section>
+			<title>ini_get</title>
+			<screen>
+			<![CDATA[
+<?php
+  echo ini_get('short_open_tag');
+?>
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section id="set_include_path">
+		<title>PHP Option</title>
+		<para>include_path</para>
+		<screen>
+		<![CDATA[
+<?php
+$path = '/usr/lib/pear';
+set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+?>
+		]]>
+		</screen>
+	</section>
+	<section id="php_uname">
+		<title>操作系统类型</title>
+		<programlisting>
+php_uname();
+PHP_OS
+DIRECTORY_SEPARATOR
+PHP_SHLIB_SUFFIX
+PATH_SEPARATOR
+
+for example：
+if(PATH_SEPARATOR==':'){
+	echo 'Linux';
+}else{
+	else echo 'Windows';
+}
+
+		</programlisting>
+	</section>
+	<section id="strftime">
+		<title>日期比较</title>
+		<programlisting>
+		<![CDATA[
+if(strftime('%Y-%m-%d',strtotime('2009-04-19')) <= date('Y-m-d')){
+	to-do ...
+}
+		]]>
+		</programlisting>
+	</section>
+	<section id="rand">
+		<title>rand()</title>
+		<screen>
+if(rand(0,99)>50){
+
+}else{
+
+}
+		</screen>
+		<para>生成随机IP地址</para>
+		<screen>
+		<![CDATA[
+<?php
+$min=1;
+$min=254;
+$ipaddr = rand($min,$max).'.'.rand($min,$max).'.'.rand($min,$max).'.'.rand($min,$max);
+//$ipaddr = '111.'.rand($min,$max).'.'.rand($min,$max).'.'.rand($min,$max);
+echo $ipaddr;
+		]]>
+		</screen>
+	</section>
+	<section id="header">
+		<title>header</title>
+		<screen>
+		<![CDATA[
+// See related links for more status codes
+
+// Use this header instruction to fix 404 headers
+// produced by url rewriting...
+header('HTTP/1.1 200 OK');
+
+// Page was not found:
+header('HTTP/1.1 404 Not Found');
+
+// Access forbidden:
+header('HTTP/1.1 403 Forbidden');
+
+// The page moved permanently should be used for
+// all redrictions, because search engines know
+// what's going on and can easily update their urls.
+header('HTTP/1.1 301 Moved Permanently');
+
+// Server error
+header('HTTP/1.1 500 Internal Server Error');
+
+// Redirect to a new location:
+header('Location: http://www.example.org/');
+
+// Redriect with a delay:
+header('Refresh: 10; url=http://www.example.org/');
+print 'You will be redirected in 10 seconds';
+
+// you can also use the HTML syntax:
+// <meta http-equiv="refresh" content="10;http://www.example.org/ />
+
+// override X-Powered-By value
+header('X-Powered-By: PHP/4.4.0');
+header('X-Powered-By: Brain/0.6b');
+
+// content language (en = English)
+header('Content-language: en');
+
+// last modified (good for caching)
+$time = time() - 60; // or filemtime($fn), etc
+header('Last-Modified: '.gmdate('D, d M Y H:i:s', $time).' GMT');
+
+// header for telling the browser that the content
+// did not get changed
+header('HTTP/1.1 304 Not Modified');
+
+// set content length (good for caching):
+header('Content-Length: 1234');
+
+// Headers for an download:
+header('Content-Type: application/octet-stream');
+header('Content-Disposition: attachment; filename="example.zip"');
+header('Content-Transfer-Encoding: binary');
+// load the file to send:
+readfile('example.zip');
+
+// Disable caching of the current document:
+header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Pragma: no-cache');
+
+// set content type:
+header('Content-Type: text/html; charset=iso-8859-1');
+header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: text/plain'); // plain text file
+header('Content-Type: image/jpeg'); // JPG picture
+header('Content-Type: application/zip'); // ZIP file
+header('Content-Type: application/pdf'); // PDF file
+header('Content-Type: audio/mpeg'); // Audio MPEG (MP3,...) file
+header('Content-Type: application/x-shockwave-flash'); // Flash animation
+
+// show sign in box
+header('HTTP/1.1 401 Unauthorized');
+header('WWW-Authenticate: Basic realm="Top Secret"');
+print 'Text that will be displayed if the user hits cancel or ';
+print 'enters wrong login data';
+		]]>
+		</screen>
+	</section>
+</chapter>

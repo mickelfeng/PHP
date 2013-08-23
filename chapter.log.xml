@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="log">
+	<title>Log</title>
+	<para>error_log 输出错误日志到  web 服务器 error.log 文件</para>
+	<screen>
+error_log("Database not available!", 0);
+	</screen>
+	<para>指定日志文件</para>
+	<screen>
+error_log("You messed up!", 3, "my-errors.log");
+	</screen>
+</chapter>

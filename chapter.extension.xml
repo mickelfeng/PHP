@@ -1,0 +1,1338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: chapter.extension.xml 662 2013-08-14 02:46:24Z netkiller $ -->
+<chapter id="php.extension">
+	<title>PECL :: The PHP Extension Community Library</title>
+	<section id="extensions.apc">
+		<title>php-apc - APC (Alternative PHP Cache) module for PHP 5</title>
+		<screen>
+		<![CDATA[
+$ apt-cache search php-apc
+php-apc - APC (Alternative PHP Cache) module for PHP 5
+
+$ sudo apt-get install php-apc
+
+echo "apc.enabled = 1
+apc.shm_size = 128
+apc.shm_segments=1
+apc.write_lock = 1
+apc.rfc1867 = On
+apc.ttl=7200
+apc.user_ttl=7200
+apc.num_files_hint=1024
+apc.mmap_file_mask=/tmp/apc.XXXXXX
+apc.enable_cli=1
+apc.slam_defense = Off
+" >> /etc/php5/conf.d/apc.ini
+		]]>
+		</screen>
+		<screen>
+# php -r 'phpinfo();' | grep apc
+PHP Warning:  phpinfo(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. in Command line code on line 1
+Additional .ini files parsed => /srv/php-5.4.15/etc/conf.d/apc.ini
+apc
+apc.cache_by_default => On => On
+apc.canonicalize => On => On
+apc.coredump_unmap => Off => Off
+apc.enable_cli => Off => Off
+apc.enabled => On => On
+apc.file_md5 => Off => Off
+apc.file_update_protection => 2 => 2
+apc.filters => no value => no value
+apc.gc_ttl => 3600 => 3600
+apc.include_once_override => Off => Off
+apc.lazy_classes => Off => Off
+apc.lazy_functions => Off => Off
+apc.max_file_size => 1M => 1M
+apc.mmap_file_mask => no value => no value
+apc.num_files_hint => 1000 => 1000
+apc.preload_path => no value => no value
+apc.report_autofilter => Off => Off
+apc.rfc1867 => Off => Off
+apc.rfc1867_freq => 0 => 0
+apc.rfc1867_name => APC_UPLOAD_PROGRESS => APC_UPLOAD_PROGRESS
+apc.rfc1867_prefix => upload_ => upload_
+apc.rfc1867_ttl => 3600 => 3600
+apc.serializer => default => default
+apc.shm_segments => 1 => 1
+apc.shm_size => 32M => 32M
+apc.shm_strings_buffer => 4M => 4M
+apc.slam_defense => On => On
+apc.stat => On => On
+apc.stat_ctime => Off => Off
+apc.ttl => 0 => 0
+apc.use_request_time => On => On
+apc.user_entries_hint => 4096 => 4096
+apc.user_ttl => 0 => 0
+apc.write_lock => On => On
+		</screen>
+		<section>
+			<title>编译安装 APC Cache</title>
+			<example>
+				<title>php apc cache</title>
+				<para>pecl install</para>
+				<screen>
+/usr/local/php/bin/pecl install apc
+				</screen>
+				<para>php.ini</para>
+				<screen>
+				<![CDATA[
+extension_dir = "/usr/local/php-5.3.3/lib/php/extensions/"
+extension = apc.so
+				]]>
+				</screen>
+			</example>
+		</section>
+	</section>
+	<section id="extensions.memcache">
+		<title>PHP Memcache</title>
+		<para><link linkend="php">参考PHP安装</link></para>
+		<section>
+			<title>pecl</title>
+			<para>进入PHP工作目录</para>
+			<screen>
+cd /usr/local/php/
+			</screen>
+			<para>安装 memcache</para>
+			<para>pecl install</para>
+			<screen>
+bin/pecl install memcache
+			</screen>
+			<para>php.ini</para>
+			<screen>
+			<![CDATA[
+vi etc/php.ini
+
+extension_dir = "/usr/local/php-5.3.3/lib/php/extensions/"
+extension = memcache.so
+			]]>
+			</screen>
+			<para>php.ini memcache 参数</para>
+			<screen>
+			<![CDATA[
+cat >> /usr/local/php/etc/php.ini <<EOF
+[memcache]
+memcache.allow_failover = 1
+memcache.max_failover_attempts=20
+memcache.chunk_size =8192
+memcache.default_port = 11211
+memcache.default_timeout_ms=30
+EOF
+			]]>
+			</screen>
+		</section>
+		<section id="php5-memcache">
+			<title>apt-get</title>
+			<screen>
+$ sudo apt-get install php5-memcache
+			</screen>
+			<para>memcache.ini 文件</para>
+			<screen>
+$ cat /etc/php5/conf.d/memcache.ini
+; uncomment the next line to enable the module
+extension=memcache.so
+
+[memcache]
+memcache.dbpath="/var/lib/memcache"
+memcache.maxreclevel=0
+memcache.maxfiles=0
+memcache.archivememlim=0
+memcache.maxfilesize=0
+memcache.maxratio=0
+			</screen>
+		</section>
+		<section>
+			<title>example</title>
+			<example>
+				<title>memcache.php</title>
+				<screen>
+				<![CDATA[
+<?php
+	$memcache = new Memcache;
+	$memcache->connect('localhost', 11211) or die ("Could not connect");
+
+	$memcache->set('var_key', 'some really big variable', MEMCACHE_COMPRESSED, 50);
+	echo $memcache->get('var_key');
+?>
+				]]>
+				</screen>
+				<para>运行测试脚本</para>
+				<screen>
+php -q memcache.php
+				</screen>
+			</example>
+		</section>
+	</section>
+
+	<section id="extension.gd">
+		<title>php5-gd - GD module for php5</title>
+		<screen>
+$ apt-cache search php|grep gd
+php5-gd - GD module for php5
+$ sudo apt-get install php5-gd
+
+$ apt-cache search php|grep zip
+libphp-pclzip - zip archive manager class for PHP
+$ sudo apt-get install libphp-pclzip
+
+$ sudo apt-get install libapache2-modxslt php-xml-htmlsax3 php-xml-parser php-xml-rss php-xml-serializer php-xml-util
+		</screen>
+	</section>
+<section id="extensions.database">
+	<title>Database Extensions</title>
+	<section id="extension.sqlite">
+		<title>sqlite</title>
+		<screen>
+		<![CDATA[
+mkdir /srv/php-5.2.17/etc/conf.d
+/srv/php-5.2.17/bin/phpize
+./configure --with-php-config=/srv/php-5.2.17/bin/php-config
+make && make install
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+cat > /srv/php-5.2.17/etc/conf.d/sqlite.ini <<EOF
+extension=sqlite.so
+extension=pdo_sqlite.so
+EOF
+		]]>
+		</screen>
+	</section>
+	<section id="extension.mysqli">
+		<title>mysqli</title>
+		<screen>
+		<![CDATA[
+mkdir /srv/php-5.2.17/etc/conf.d
+/srv/php-5.2.17/bin/phpize
+./configure --with-php-config=/srv/php-5.2.17/bin/php-config
+make && make install
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+cat > /srv/php-5.2.17/etc/conf.d/mysqli.ini <<EOF
+extension=mysqli.so
+EOF
+		]]>
+		</screen>
+	</section>
+	<section id="extension.mongo">
+		<title>MongoDB</title>
+		<screen>
+sudo pecl install mongo
+		</screen>
+		<screen>
+vim /srv/php/etc/conf.d/mongo.ini
+extension=mongo.so
+		</screen>
+	</section>
+	<section id="extension.php-redis">
+		<title>php-redis.x86_64 : Extension for communicating with the Redis key-value store</title>
+		<section>
+			<title>pecl 安装</title>
+			<screen>
+pecl install redis
+			</screen>
+		</section>
+		<section>
+			<title>yum安装</title>
+
+			<para>https://github.com/nicolasff/phpredis</para>
+			<screen>
+yum search redis
+
+php-redis.x86_64 : Extension for communicating with the Redis key-value store
+python-redis.noarch : A Python client for redis
+redis.x86_64 : A persistent key-value database
+			</screen>
+		</section>
+		<section>
+			<title>源码编译安装</title>
+			<para>安装git版本控制客户端</para>
+			<screen>
+yum install git
+			</screen>
+			<para>从github仓库中克隆一份代码到本地</para>
+			<screen>
+git clone git://github.com/nicolasff/phpredis.git
+			</screen>
+			<para>编译安装phpredis； 我暂时没有找到 pecl的phpredis源</para>
+			<screen>
+			<![CDATA[
+cd phpredis
+phpize
+./configure --with-php-config=/srv/php-5.4.9/bin/php-config
+make && make install
+			]]>
+			</screen>
+			<para>创建配置文件</para>
+		</section>
+		<section>
+			<title>配置 redis.ini </title>
+			<screen>
+			<![CDATA[
+cat > /srv/php-5.4.9/etc/conf.d/redis.ini <<EOF
+extension=redis.so
+EOF
+			]]>
+			</screen>
+			<para>查看安装情况</para>
+			<screen>
+# php -m | grep redis
+redis
+			</screen>
+		</section>
+		<section>
+			<title>Session 配置</title>
+			<para>使用 Redis 存储 Session 数据</para>
+			<screen>
+			<![CDATA[
+session.save_handler = redis
+session.save_path = "tcp://127.0.0.1:6379"
+或者使用多个redis
+session.save_path = "tcp://host1:6379?weight=1, tcp://host2:6379?weight=2&timeout=2.5, tcp://host3:6379?weight=2"
+			]]>
+			</screen>
+		</section>
+	</section>
+
+	<section id="extension.pgsql">
+		<title>php5-pgsql - PostgreSQL module for php5</title>
+		<screen>
+$ sudo apt-get install php5-pgsql
+		</screen>
+	</section>
+	<section id="extension.mssql">
+		<title>PHP connect SQL Server under unix like</title>
+		<para>Sql Server 支持由Freetds提供</para>
+		<para>主页：<ulink url="http://www.freetds.org/">http://www.freetds.org/</ulink></para>
+		<screen>
+cd /usr/local/src/
+wget ftp://ftp.ibiblio.org/pub/Linux/ALPHA/freetds/stable/freetds-stable.tgz
+tar zxvf freetds-stable.tgz
+cd freetds-0.64/
+
+./configure --prefix=/usr/local/freetds-0.64
+make
+make install
+
+ln -s /usr/local/freetds-0.64 /usr/local/freetds
+		</screen>
+		<para>configure</para>
+		<screen>
+./configure --prefix=/usr/local/php-5.2.3 \
+--with-config-file-path=/usr/local/php-5.2.3/etc \
+--enable-fastcgi \
+--enable-force-cgi-redirect \
+--with-curl \
+--with-gd \
+--with-ldap \
+--enable-zip \
+--enable-exif \
+--enable-pcntl \
+--with-mssql=/usr/local/freetds
+
+make
+make test
+make install
+		</screen>
+		<para>MSSQL在PHP中的配置如下</para>
+		<para>/usr/local/freetds/etc/freetds.conf</para>
+		<screen>
+[MyServer2k]
+       host = 10.10.10.11
+       port = 3433
+       tds version = 8.0
+		</screen>
+		<para>mssql.php 测试文件</para>
+		<programlisting>
+		<![CDATA[
+<?php
+$conn = mssql_pconnect('MyServer2k', 'u_mobile', 'kEyt+_Zf.$P6');
+mssql_select_db('D3_Mobile', $conn);
+$query = mssql_query ('select * from dbo.MobileCommand where id=1');
+$result = mssql_fetch_array ($query);
+echo '<pre>';
+print_r($result);
+echo '</pre>';
+?>
+		]]>
+		</programlisting>
+		<note>
+			<title>mssql_pconnect</title>
+			<para>
+resource mssql_connect ( [string servername [, string username [, string password [, bool new_link]]]] )
+			</para>
+			<para>servername 指的是freetds.conf中定义服务器名</para>
+		</note>
+		<para>测试</para>
+		<command>php -q mssql.php</command>
+	</section>
+	<section id="php5-mysql">
+		<title>MySQL</title>
+		<screen>
+$ sudo apt-get install php5-mysql
+		</screen>
+	</section>
+
+	<section id="extensions.oracle">
+		<title>oracle</title>
+		<para>pdo_oci/oci8</para>
+		<para>http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html</para>
+		<screen>
+export ORACLE_HOME=/usr/lib/oracle/11.1/client64/
+export LD_LIBRARY_PATH=/usr/lib/oracle/11.1/client64:$LD_LIBRARY_PATH
+export  NLS_LANG="AMERICAN_AMERICA.AL32UTF8"
+		</screen>
+		<para></para>
+		<screen>
+cd /usr/local/src/php-5.2.14/ext/pdo_oci
+/usr/local/php-5.2.14/bin/phpize
+./configure --with-php-config=/usr/local/php-5.2.14/bin/php-config --with-oci8=instantclient,/usr/lib/oracle/11.1/client64/lib
+    make
+    make install
+		</screen>
+		<screen>
+   安装后生成/usr/local/php/lib/php/extensions/no-debug-non-zts-yyyymmdd/oci8.so
+   把oci8.so 移动到/usr/local/php/lib/php/extensions/目录下
+    mv /usr/local/php/lib/php/extensions/no-debug-non-zts-yyyymmdd/oci8.so ../
+
+    extension_dir = /usr/local/php/lib/php/extensions/
+
+   添加
+     extension = pdo_oci.so
+     extension = oci8.so
+		</screen>
+
+		<example>
+			<title>oracle</title>
+			<screen>
+			<![CDATA[
+ln -s /usr/lib/oracle/10.2.0.3/client64 /usr/lib/oracle/10.2.0.3/client
+ln -s /usr/include/oracle/10.2.0.3/client64    /usr/include/oracle/10.2.0.3/client
+
+export ORACLE_HOME=/usr/lib/oracle/10.2.0.3/client64/
+export LD_LIBRARY_PATH=/usr/lib/oracle/10.2.0.3/client64:$LD_LIBRARY_PATH
+export  NLS_LANG="AMERICAN_AMERICA.AL32UTF8"
+# /usr/local/php-5.2.14/bin/phpize
+# ./configure --with-php-config=/usr/local/php-5.2.14/bin/php-config  --with-pdo-oci=instantclient,/usr,10.2.0.3
+# make && make install
+			]]>
+			</screen>
+			<para>php.ini</para>
+			<screen>
+extension=pdo_oci.so
+			</screen>
+			<para>oci.php</para>
+			<screen>
+			<![CDATA[
+    <?php
+    $pdo= new PDO("oci:dbname=//localhost:1521/mydbname;charset=utf-8,username,password);
+
+    $sql="select table_name as tname from user_tables";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+
+    for($i=0; $row = $query->fetch(); $i++){
+      #print_r($row);
+      echo $i." - ".$row[0]."<br/>";
+      echo $i." - ".$row['TNAME']."<br/>";
+    }
+    ?>
+			]]>
+			</screen>
+		</example>
+	</section>
+</section>
+
+	<section id="extensions.xmlrpc">
+		<title>xmlrpc</title>
+		<para>单独编译php扩展模块</para>
+		<screen>
+		<![CDATA[
+[root@websrv]# cd /usr/local/php-5.3.0/ext/xmlrpc
+[root@websrv]# /usr/local/php-5.3.0/bin/phpize
+[root@websrv]# ./configure --with-php-config=/usr/local/php-5.3.0/bin/php-config
+[root@websrv]# make
+[root@websrv]# make test
+[root@websrv]# make install
+Installing shared extensions: /usr/local/php-5.3.0/lib/php/extensions/no-debug-zts-20060613/
+[root@websrv]# mv /usr/local/php-5.3.0/lib/php/extensions/no-debug-zts-20060613/* /usr/local/php-5.3.0/lib/php/extensions/
+		]]>
+		</screen>
+		<para>修改配置在php.ini里，配置扩展目录 并添加扩展模块引用：</para>
+		<screen>
+		<![CDATA[
+extension_dir = "/usr/local/php-5.3.0/lib/php/extensions/"
+extension = xmlrpc.so
+		]]>
+		</screen>
+	</section>
+
+	<section id="extensions.openssl">
+		<title>openssl</title>
+		<example>
+			<title>php openssl</title>
+			<para>source install</para>
+			<screen>
+			<![CDATA[
+# yum install openssl-devel
+# cd /usr/local/src/php-5.2.17/ext/openssl
+# cp config0.m4 config.m4
+# /srv/php-5.2.17/bin/phpize
+
+Configuring for:
+PHP Api Version:         20041225
+Zend Module Api No:      20060613
+Zend Extension Api No:   220060519
+
+# ./configure --with-php-config=/srv/php-5.2.17/bin/php-config
+# make && make test && make install
+
+Thank you for helping to make PHP better.
+Installing shared extensions: /srv/php-5.2.17/lib/php/extensions/no-debug-non-zts-20060613/
+			]]>
+			</screen>
+			<para>php.ini</para>
+			<screen>
+			<![CDATA[
+cat > /srv/php-5.2.17/etc/conf.d/openssl.ini <<EOF
+extension=openssl.so
+EOF
+			]]>
+			</screen>
+		</example>
+	</section>
+	<section id="extensions.mcrypt">
+		<title>mcrypt</title>
+		<example>
+			<title>mcrypt</title>
+			<screen>
+# yum install libmcrypt libmcrypt-devel
+
+# cd /usr/local/src/php-5.2.17/ext/mcrypt
+# /usr/local/php-5.2.17/bin/phpize
+# ./configure --with-php-config=/usr/local/php-5.2.17/bin/php-config
+# make
+# make test
+# make install
+
+# cp /usr/local/php-5.2.17/lib/php/extensions/no-debug-zts-20060613/mcrypt.so /usr/local/php-5.2.17/lib/php/extensions/
+
+# vim /usr/local/php-5.2.17/etc/php.ini
+extension_dir = "/usr/local/php-5.2.17/lib/php/extensions/"
+extension=mcrypt.so
+			</screen>
+		</example>
+		<screen>
+		<![CDATA[
+cat > /srv/php-5.2.17/etc/conf.d/mcrypt.ini <<EOF
+extension=mcrypt.so
+EOF
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>mhash</title>
+		<screen>
+		<![CDATA[
+cat > /srv/php-5.2.17/etc/conf.d/mhash.ini <<EOF
+extension=mhash.so
+EOF
+		]]>
+		</screen>
+	</section>
+	<section id="extensions.simplexml">
+		<title>simplexml</title>
+		<example>
+			<title>simplexml</title>
+			<screen>
+# cd /usr/local/src/php-5.2.17/ext/simplexml
+# /usr/local/php-5.2.17/bin/phpize
+# ./configure --with-php-config=/usr/local/php-5.2.17/bin/php-config
+# make
+# make test
+# make install
+# cp /usr/local/php-5.2.17/lib/php/extensions/no-debug-zts-20060613/simplexml.so /usr/local/php-5.2.17/lib/php/extensions/
+extension_dir = "/usr/local/php-5.2.17/lib/php/extensions/"
+extension=simplexml.so
+			</screen>
+		</example>
+	</section>
+
+	<section id="extensions.ioncube">
+		<title>ionCube</title>
+		<para><ulink url="http://www.ioncube.com/">http://www.ioncube.com/</ulink></para>
+		<screen>
+# cd /usr/local/src/
+# wget http://downloads2.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+
+# tar zxvf ioncube_loaders_lin_x86-64.tar.gz
+ioncube/
+ioncube/ioncube_loader_lin_4.3_ts.so
+ioncube/ioncube_loader_lin_5.2_ts.so
+ioncube/LICENSE.txt
+ioncube/loader-wizard.php
+ioncube/ioncube_loader_lin_4.4_ts.so
+ioncube/ioncube_loader_lin_5.1_ts.so
+ioncube/ioncube_loader_lin_5.0.so
+ioncube/ioncube_loader_lin_5.1.so
+ioncube/ioncube_loader_lin_5.3_ts.so
+ioncube/ioncube_loader_lin_5.2.so
+ioncube/ioncube_loader_lin_4.2.so
+ioncube/README.txt
+ioncube/ioncube_loader_lin_5.0_ts.so
+ioncube/ioncube_loader_lin_4.3.so
+ioncube/ioncube_loader_lin_4.4.so
+ioncube/ioncube_loader_lin_4.1.so
+ioncube/ioncube_loader_lin_5.3.so
+
+# mv ioncube ..
+		</screen>
+		<para>php.ini</para>
+		<screen>
+[Zend]
+zend_extension_ts = /usr/local/ioncube/ioncube_loader_lin_5.2_ts.so
+		</screen>
+		<!-- zend_extension = /usr/local/ioncube/ioncube_loader_lin_5.2.so -->
+		<para>test</para>
+		<screen>
+# /usr/local/php-5.2.14/bin/php -m
+[PHP Modules]
+ctype
+curl
+date
+dom
+filter
+ftp
+gd
+hash
+iconv
+ionCube Loader
+json
+libxml
+mbstring
+memcache
+mysql
+mysqli
+openssl
+pcre
+PDO
+pdo_mysql
+pdo_sqlite
+posix
+Reflection
+session
+SimpleXML
+soap
+sockets
+SPL
+SQLite
+standard
+tokenizer
+xml
+xmlreader
+xmlrpc
+xmlwriter
+zip
+zlib
+
+[Zend Modules]
+the ionCube PHP Loader
+		</screen>
+	</section>
+	<section id="extension.zendoptimizer">
+		<title>ZendOptimizer</title>
+		<screen>
+# cd /usr/local/src
+# tar zxvf ZendOptimizer-3.3.9-linux-glibc23-x86_64.tar.gz
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/md5
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/Inventory.xml
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/EULA-ZendOptimizer
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/README-ZendOptimizer
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/LICENSE
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/4_3_x_comp/
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/4_3_x_comp/ZendOptimizer.so
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/5_1_x_comp/
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/5_1_x_comp/ZendOptimizer.so
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/4_2_x_comp/
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/4_2_x_comp/ZendOptimizer.so
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/5_0_x_comp/
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/5_0_x_comp/ZendOptimizer.so
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/4_4_x_comp/
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/4_4_x_comp/ZendOptimizer.so
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/poweredbyoptimizer.gif
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/4_2_0_comp/
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/4_2_0_comp/ZendOptimizer.so
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/5_2_x_comp/
+ZendOptimizer-3.3.9-linux-glibc23-x86_64/data/5_2_x_comp/ZendOptimizer.so
+
+# mv ZendOptimizer-3.3.9-linux-glibc23-x86_64 ..
+# cd ..
+# ln -s ZendOptimizer-3.3.9-linux-glibc23-x86_64 ZendOptimizer
+		</screen>
+		<para>php.ini</para>
+		<screen>
+zend_optimizer.optimization_level=15
+zend_extension="/usr/local/ZendOptimizer/data/5_2_x_comp/ZendOptimizer.so"
+		</screen>
+		<screen>
+		<![CDATA[
+tar zxf ZendOptimizer-3.3.9-linux-glibc23-x86_64.tar.gz
+mv ZendOptimizer-3.3.9-linux-glibc23-x86_64 ..
+
+ln -s /usr/local/ZendOptimizer-3.3.9-linux-glibc23-x86_64 /usr/local/ZendOptimizer
+
+cat >> /usr/local/php/etc/php.ini <<EOF
+[Zend]
+zend_optimizer.optimization_level=15
+zend_extension="/usr/local/ZendOptimizer/data/5_2_x_comp/ZendOptimizer.so"
+EOF
+		]]>
+		</screen>
+	</section>
+	<section id="extensions.zip">
+		<title>zip</title>
+		<screen>
+cd /usr/src/php-5.2.14/ext/zip/
+
+/usr/local/php-5.2.14/bin/phpize
+./configure --with-php-config=/usr/local/php-5.2.14/bin/php-config
+make
+make install
+mv /usr/local/php-5.2.14/lib/php/extensions/no-debug-non-zts-20060613/zip.so /usr/local/php-5.2.14/lib/php/extensions/
+
+
+vim /usr/local/php-5.2.14/etc/php.ini
+extension_dir = "/usr/local/php-5.2.14/lib/php/extensions/"
+extension=zip.so
+
+/usr/local/php-5.2.14/bin/php -m | grep zip
+		</screen>
+	</section>
+
+	<section id="pcntl">
+		<title>pcntl</title>
+		<para>编译的时候没有带--enable-pcntl参数的补救办法</para>
+		<screen>
+		<![CDATA[
+cd php-5.2.17/ext/pcntl
+
+/srv/php-5.2.17/bin/phpsize
+./configure --with-php-config=/srv/php-5.2.17/bin/php-config
+make && make install
+		]]>
+		</screen>
+		<para>加入到php.ini</para>
+		<screen>
+		<![CDATA[
+cat > /srv/php-5.2.17/etc/conf.d/pcntl.ini <<EOF
+extension=pcntl.so
+EOF
+		]]>
+		</screen>
+		<para></para>
+		<screen>
+php -m | grep pcntl
+		</screen>
+	</section>
+	<section id="mbstring">
+		<title>mbstring</title>
+		<screen>
+		<![CDATA[
+cd /usr/local/src/php-5.2.17/ext/mbstring
+
+phpsize
+./configure --with-php-config=/srv/php-5.2.17/bin/php-config
+make && make install
+		]]>
+		</screen>
+		<screen>
+extension=mbstring.so
+		</screen>
+		<screen>
+# vi php.ini
+
+把输出处理程序设为mbstring对应。
+;output_handler =
+output_handler = "mb_output_handler"
+
+设定文字集为UTF-8。
+;default_charset = "iso-8859-1"
+default_charset = "UTF-8"
+
+设置mbstring的语言为Chinese
+;mbstring.language = Japanese
+mbstring.language = Chinese
+
+设置mbstring的内部编码为UTF-8。
+;mbstring.internal_encoding = EUC-JP
+mbstring.internal_encoding = UTF-8
+
+设置mbstring的输入文字编码为自动判别方式。
+;mbstring.http_input = auto
+mbstring.http_input = auto
+
+把mbstring输出文字编码设为UTF-8。
+;mbstring.http_output = SJIS
+mbstring.http_output = UTF-8
+
+激活mbstring的文字编码自动变换方式。
+;mbstring.encoding_translation = Off
+mbstring.encoding_translation = On
+
+		</screen>
+	</section>
+
+	<section id="extensions.suhosin">
+		<title>Suhosin</title>
+		<screen>
+		<![CDATA[
+Step of installation for Suhosin:
+1. Download suhosin and install it
+#cd /usr/local/
+#wget http://www.hardened-php.net/suhosin/_media/suhosin-0.9.18.tgz
+#tar -zxvf suhosin-0.9.18.tgz
+#cd suhosin-0.9.18
+#phpize
+#./configure
+#make && make install
+2. Adding a load directive to php.ini
+extension=suhosin.so
+[suhosin]
+suhosin.get.max_value_length = 5120
+3. Restart apache service
+#/etc/init.d/httpd restart
+		]]>
+		</screen>
+		<para>Configuration</para>
+		<screen>
+Logging Configuration
+suhosin.log.syslog
+suhosin.log.syslog.facility
+suhosin.log.syslog.priority
+suhosin.log.sapi
+suhosin.log.script
+suhosin.log.phpscript
+suhosin.log.script.name
+suhosin.log.phpscript.name
+suhosin.log.use-x-forwarded-for
+Executor Options
+suhosin.executor.max_depth
+suhosin.executor.include.max_traversal
+suhosin.executor.include.whitelist
+suhosin.executor.include.blacklist
+suhosin.executor.func.whitelist
+suhosin.executor.func.blacklist
+suhosin.executor.eval.whitelist
+suhosin.executor.eval.blacklist
+suhosin.executor.disable_eval
+suhosin.executor.disable_emodifier
+suhosin.executor.allow_symlink
+Misc Options
+suhosin.simulation
+suhosin.apc_bug_workaround
+suhosin.sql.bailout_on_error
+suhosin.sql.user_prefix
+suhosin.sql.user_postfix
+suhosin.multiheader
+suhosin.mail.protect
+suhosin.memory_limit
+Transparent Encryption Options
+suhosin.session.encrypt
+suhosin.session.cryptkey
+suhosin.session.cryptua
+suhosin.session.cryptdocroot
+suhosin.session.cryptraddr
+suhosin.session.checkraddr
+suhosin.cookie.encrypt
+suhosin.cookie.cryptkey
+suhosin.cookie.cryptua
+suhosin.cookie.cryptdocroot
+suhosin.cookie.cryptraddr
+suhosin.cookie.checkraddr
+suhosin.cookie.cryptlist
+suhosin.cookie.plainlist
+Filtering Options
+suhosin.filter.action
+suhosin.cookie.max_array_depth
+suhosin.cookie.max_array_index_length
+suhosin.cookie.max_name_length
+suhosin.cookie.max_totalname_length
+suhosin.cookie.max_value_length
+suhosin.cookie.max_vars
+suhosin.cookie.disallow_nul
+suhosin.get.max_array_depth
+suhosin.get.max_array_index_length
+suhosin.get.max_name_length
+suhosin.get.max_totalname_length
+suhosin.get.max_value_length
+suhosin.get.max_vars
+suhosin.get.disallow_nul
+suhosin.post.max_array_depth
+suhosin.post.max_array_index_length
+suhosin.post.max_name_length
+suhosin.post.max_totalname_length
+suhosin.post.max_value_length
+suhosin.post.max_vars
+suhosin.post.disallow_nul
+suhosin.request.max_array_depth
+suhosin.request.max_array_index_length
+suhosin.request.max_totalname_length
+suhosin.request.max_value_length
+suhosin.request.max_vars
+suhosin.request.max_varname_length
+suhosin.request.disallow_nul
+suhosin.upload.max_uploads
+suhosin.upload.disallow_elf
+suhosin.upload.disallow_binary
+suhosin.upload.remove_binary
+suhosin.upload.verification_script
+suhosin.session.max_id_length
+		</screen>
+		<para>suhosin有三个选项控制eval</para>
+		<screen>
+suhosin.executor.eval.whitelist        白名单
+suhosin.executor.eval.blacklist        黑名单
+suhosin.executor.disable_eval        禁用eval
+很多程序需要eval，所以我们不能禁用，使用黑名单禁止一些危险的函数
+编辑php.ini
+[Suhosin]
+suhosin.executor.eval.blacklist=phpinfo,fputs,fopen,fwrite
+根据实际情况自行设定
+		</screen>
+		<para>包含漏洞</para>
+		<screen>
+suhosin.executor.include.max_traversal        包含的最大目录深度，在包含的文件名中有多少个../就禁止，例如值为2时，../../etc/passwd会禁止，值为3则允许，对于大多数程序，这个值设为4或5比较合适
+suhosin.executor.include.whitelist        允许包含的URL，用逗号分隔
+suhosin.executor.include.blacklist        禁止包含的URL，用逗号分隔
+		</screen>
+		<para>上传漏洞</para>
+		<screen>
+suhosin.upload.max_uploads
+suhosin.upload.disallow_elf
+suhosin.upload.disallow_binary
+suhosin.upload.remove_binary
+suhosin.upload.verification_script        上传文件检查脚本
+可以自己写一个脚本检查上传文件是否有webshell特征，然后suhosin.upload.verification_script 的值是这个脚本的绝对路径
+		</screen>
+		<para>其他更深入的防护措施，还有待研究，参考suhosin选项
+http://www.hardened-php.net/suhosin/configuration.html</para>
+	</section>
+	<section id="extension.freetype">
+		<title>freetype</title>
+		<screen>
+
+		</screen>
+	</section>
+	<section id="extension.xcache">
+		<title>XCache</title>
+		<section>
+			<title>apt-get</title>
+			<screen>
+sudo apt-get install php5-xcache
+			</screen>
+		</section>
+		<section>
+			<title>make</title>
+			<screen>
+# wget http://xcache.lighttpd.net/pub/Releases/1.3.2/xcache-1.3.2.tar.gz
+# tar zxvf xcache-1.3.2.tar.gz
+# cd xcache-1.3.2
+# /srv/php/bin/phpize
+# ./configure --enable-xcache
+# ./configure --enable-xcache --with-php-config=/srv/php/bin/php-config
+# make
+# make install
+
+# mv /srv/php-5.3.5/lib/php/extensions/no-debug-non-zts-20090626/xcache.so  /srv/php-5.3.5/lib/php/extensions/
+# mkdir -p /srv/php/etc/conf.d/
+			</screen>
+			<para>xcache.ini</para>
+			<screen>
+			<![CDATA[
+cat > /srv/php/etc/conf.d/xcache.ini <<EOF
+[xcache-common]
+zend_extension=/srv/php-5.3.5/lib/php/extensions/xcache.so
+
+[xcache.admin]
+xcache.admin.user = "xcache"
+xcache.admin.pass = "bed128365216c019988915ed3add75fb"
+
+[xcache]
+xcache.size  = 64M
+xcache.count = 24
+xcache.gc_interval = 300
+xcache.var_size  = 16M
+xcache.var_count = 24
+xcache.var_gc_interval = 300
+xcache.readonly_protection = On
+xcache.coredump_directory =   ""
+xcache.optimizer = On
+
+[xcache.coverager]
+xcache.coverager = On
+xcache.coveragedump_directory = ""
+EOF
+			]]>
+			</screen>
+			<screen>
+# /srv/php/bin/php -m
+[PHP Modules]
+bcmath
+calendar
+Core
+ctype
+curl
+date
+dba
+dom
+ereg
+exif
+fileinfo
+filter
+ftp
+gd
+hash
+iconv
+json
+libxml
+mbstring
+mcrypt
+mhash
+mysql
+mysqli
+openssl
+pcre
+PDO
+pdo_mysql
+Phar
+posix
+Reflection
+session
+shmop
+SimpleXML
+soap
+sockets
+SPL
+sqlite3
+standard
+sysvmsg
+sysvsem
+sysvshm
+tokenizer
+wddx
+XCache
+xml
+xmlreader
+xmlrpc
+xmlwriter
+xsl
+zip
+zlib
+
+[Zend Modules]
+XCache
+			</screen>
+		</section>
+	</section>
+
+	<section id="extension.xhprof">
+		<title>XHProf</title>
+		<para>XHProf是facebook开源出来的一个php轻量级的性能分析工具，跟Xdebug类似，但性能开销更低，还可以用在生产环境中，也可以由程序开 关来控制是否进行profile。</para>
+		<para>https://github.com/facebook/xhprof</para>
+		<para>安装依赖工具</para>
+		<screen>
+		<![CDATA[
+$ sudo apt-get install graphviz
+
+or
+
+wget http://www.graphviz.org/pub/graphviz/stable/SOURCES/graphviz-2.24.0.tar.gz
+tar zxf graphviz-2.24.0.tar.gz
+cd graphviz-2.24.0
+./configure
+make && make install
+		]]>
+		</screen>
+		<para>安装xhprof</para>
+		<screen>
+		<![CDATA[
+pecl install xhprof
+mv /srv/php-5.3.8/lib/php/extensions/no-debug-non-zts-20090626/xhprof.so /srv/php-5.3.8/lib/php/extensions/
+
+or
+
+wget http://pecl.php.net/get/xhprof
+
+tar zxf xhprof-0.9.2.tgz
+cd xhprof-0.9.2
+cp -r xhprof_html xhprof_lib /www/www.example.com/xhprof/
+cd extension/
+/usr/local/webserver/php/bin/phpize
+./configure  –with-php-config=/srv/php/bin/php-config
+make && make install
+		]]>
+		</screen>
+		<para>安装完提示：</para>
+		<screen>
+Installing shared extensions:     /srv/php/lib/php/extensions/no-debug-non-zts-20060613/
+
+cp /srv/php/lib/php/extensions/no-debug-non-zts-20060613/* /srv/php/lib/php/extensions/
+		</screen>
+		<para>增加xhprof.ini</para>
+		<screen>
+		<![CDATA[
+cat >> /srv/php/etc/conf.d/xhprof.ini <<EOF
+extension=xhprof.so
+xhprof.output_dir=/www/logs/xhprof
+EOF
+		]]>
+		</screen>
+		<para>分析日志输出在/www/logs/xhprof目录</para>
+		<para>检查安装是否成功</para>
+		<screen>
+# /srv/php/bin/php -m | grep xhprof
+xhprof
+		</screen>
+		<example>
+			<title>xhprof/sample.php</title>
+			<screen>
+			<![CDATA[
+<?php
+
+function bar($x) {
+  if ($x > 0) {
+    bar($x - 1);
+  }
+}
+
+function foo() {
+  for ($idx = 0; $idx < 5; $idx++) {
+    bar($idx);
+    $x = strlen("abc");
+  }
+}
+
+// start profiling
+xhprof_enable();
+
+// run program
+foo();
+
+// stop profiler
+$xhprof_data = xhprof_disable();
+
+// display raw xhprof data for the profiler run
+print_r($xhprof_data);
+
+
+$XHPROF_ROOT = realpath(dirname(__FILE__) .'/..');
+include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
+include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
+
+// save raw data for this profiler run using default
+// implementation of iXHProfRuns.
+$xhprof_runs = new XHProfRuns_Default();
+
+// save the run under a namespace "xhprof_foo"
+$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof_foo");
+
+echo "---------------\n".
+     "Assuming you have set up the http based UI for \n".
+     "XHProf at some address, you can view run at \n".
+     "http://<xhprof-ui-address>/index.php?run=$run_id&source=xhprof_foo\n".
+     "---------------\n";
+			]]>
+			</screen>
+		</example>
+	</section>
+	<section id="extension.xdebug">
+		<title>Xdebug</title>
+		<para>Xdebug是一个开放源代码的PHP程序调试器(即一个Debug工具)，可以用来跟踪，调试和分析PHP程序的运行状况。</para>
+		<screen>
+# /srv/php/bin/pecl list-all | grep xdebug
+pecl/xdebug          2.1.2            Provides functions for function traces and profiling
+
+# /srv/php/bin/pecl install xdebug
+
+# mv /srv/php/lib/php/extensions/no-debug-non-zts-*/xdebug.so /srv/php/lib/php/extensions/
+
+		</screen>
+		<screen>
+		<![CDATA[
+cat > /srv/php/etc/conf.d/xdebug.ini <<EOF
+[Zend Modules]
+zend_extension="/srv/php/lib/php/extensions/xdebug.so"
+
+[Xdebug]
+xdebug.profiler_enable = on
+xdebug.trace_output_dir = "/tmp/xdebug"
+xdebug.profiler_output_dir = "/tmp/xdebug"
+EOF
+		]]>
+		</screen>
+		<screen>
+# /srv/php/bin/php -m | grep xdebug
+xdebug
+		</screen>
+		<para>参数说明</para>
+		<screen>
+xdebug.default_enable
+类型：布尔型 默认值：On
+如果这项设置为On，堆栈跟踪将被默认的显示在错误事件中。你可以通过在代码中使用xdebug_disable()来禁止堆叠跟踪的显示。因为这是xdebug基本功能之一，将这项参数设置为On是比较明智的。
+xdebug.max_nesting_level
+类型：整型 默认值：100
+The value of this setting is the maximum level of nested functions that are allowed before the script will be aborted.
+限制无限递归的访问深度。这项参数设置的值是脚本失败前所允许的嵌套程序的最大访问深度。
+堆栈跟踪
+相关参数设置
+xdebug.dump_globals
+类型：布尔型 默认值：1
+限制是否显示被xdebug.dump.*设置定义的超全局变量的值
+例如，xdebug.dump.SERVER = REQUEST_METHOD,REQUEST_URI,HTTP_USER_AGENT 将打印 PHP 超全局变量 $_SERVER['REQUEST_METHOD']、$_SERVER['REQUEST_URI'] 和 $_SERVER['HTTP_USER_AGENT']。
+xdebug.dump_once
+类型：布尔型 默认值：1
+限制是否超全局变量的值应该转储在所有出错环境(设置为Off时)或仅仅在开始的地方(设置为On时)
+xdebug.dump_undefined
+类型：布尔型 默认值：0
+如果你想从超全局变量中转储未定义的值，你应该把这个参数设置成On，否则就设置成Off
+xdebug.show_exception_trace
+类型：整型 默认值：0
+当这个参数被设置为1时，即使捕捉到异常，xdebug仍将强制执行异常跟踪当一个异常出现时。
+xdebug.show_local_vars
+类型：整型 默认值：0
+当这个参数被设置为不等于0时，xdebug在错环境中所产生的堆栈转储还将显示所有局部变量，包括尚未初始化的变量在最上面。要注意的是这将产生大量的信息，也因此默认情况下是关闭的。
+分析PHP脚本
+相关参数设置
+xdebug.profiler_append
+类型：整型 默认值：0
+当这个参数被设置为1时，文件将不会被追加当一个新的需求到一个相同的文件时(依靠xdebug.profiler_output_name的设置)。相反的设置的话，文件将被附加成一个新文件。
+xdebug.profiler_enable
+类型：整型 默认值：0
+开放xdebug文件的权限，就是在文件输出目录中创建文件。那些文件可以通过KCacheGrind来阅读来展现你的数据。这个设置不能通过在你的脚本中调用ini_set()来设置。
+xdebug.profiler_output_dir
+类型：字符串 默认值：/tmp
+这个文件是profiler文件输出写入的，确信PHP用户对这个目录有写入的权限。这个设置不能通过在你的脚本中调用ini_set()来设置。
+xdebug.profiler_output_name
+类型：字符串 默认值：cachegrind.out%p
+这个设置决定了转储跟踪写入的文件的名称。
+远程Debug
+相关参数设置
+xdebug.remote_autostart
+类型：布尔型 默认值：0
+一般来说，你需要使用明确的HTTP GET/POST变量来开启远程debug。而当这个参数设置为On，xdebug将经常试图去开启一个远程debug session并试图去连接客户端，即使GET/POST/COOKIE变量不是当前的。
+xdebug.remote_enable
+类型：布尔型 默认值：0
+这个开关控制xdebug是否应该试着去连接一个按照xdebug.remote_host和xdebug.remote_port来设置监听主机和端口的debug客户端。
+xdebug.remote_host
+类型：字符串 默认值：localhost
+选择debug客户端正在运行的主机，你不仅可以使用主机名还可以使用IP地址
+xdebug.remote_port
+类型：整型 默认值：9000
+这个端口是xdebug试着去连接远程主机的。9000是一般客户端和被绑定的debug客户端默认的端口。许多客户端都使用这个端口数字，最好不要去修改这个设置。
+		</screen>
+		<section>
+			<title>Webgrind</title>
+			<para>Webgrind是一款可以通过浏览器图形化查看Xdebug输出的日志分析文件的软件</para>
+		</section>
+		<section>
+			<title>WinCacheGrind</title>
+			<para>WinCacheGrind是一款Windows下的可以图形化查看Xdebug输出的日志分析文件的软件</para>
+		</section>
+	</section>
+	<section id="extension.uploadprogress">
+		<title>UploadProgress</title>
+		<para>UploadProgress是一个用于提供用户文件上传进度查看功能的PHP扩展，以便提高应用的用户体验.</para>
+		<screen>
+# /srv/php/bin/pecl list-all | grep uploadprogress
+pecl/uploadprogress  1.0.3.1          An extension to track progress of a file upload.
+		</screen>
+		<screen>
+# /srv/php/bin/pecl install uploadprogress
+# mv /srv/php-5.3.8/lib/php/extensions/no-debug-non-zts-20090626/uploadprogress.so /srv/php-5.3.8/lib/php/extensions/
+		</screen>
+		<screen>
+		<![CDATA[
+cat >> /srv/php/etc/conf.d/uploadprogress.ini <<EOF
+extension=uploadprogress.so
+EOF
+		]]>
+		</screen>
+		<screen>
+# /srv/php/bin/php -m | grep uploadprogress
+uploadprogress
+		</screen>
+	</section>
+	<section id="msgpack">
+		<title>msgpack</title>
+		<screen>
+		<![CDATA[
+git clone https://github.com/msgpack/msgpack-php.git
+cd msgpack-php
+phpize
+./configure && make && make install
+$data = array(0=>1,1=>2,2=>3);
+$msg = msgpack_pack($data);
+$data = msgpack_unpack($msg);
+		]]>
+		</screen>
+	</section>
+	<section id="extension.iconv">
+		<title>iconv</title>
+		<screen>
+cd /usr/local/src/
+cd php-5.2.17/ext/iconv/
+/srv/php-5.2.17/bin/phpize
+./configure --with-php-config=/srv/php-5.2.17/bin/php-config
+make
+make install
+		</screen>
+		<screen>
+		<![CDATA[
+cat > /srv/php-5.2.17/etc/conf.d/iconv.ini <<EOF
+extension=iconv.so
+EOF
+		]]>
+		</screen>
+		<screen>
+/srv/php-5.2.17/bin/php -m | grep iconv
+iconv
+
+/srv/php-5.2.17/sbin/php-fpm restart
+		</screen>
+	</section>
+	<section id="extension.imagick">
+		<title>imagick</title>
+		<screen>
+		<![CDATA[
+# yum install -y ImageMagick-devel
+# pecl install imagick
+
+cat > /srv/php/etc/conf.d/imagick.ini <<EOF
+extension=imagick.so
+EOF
+		]]>
+		</screen>
+	</section>
+	<section id="extension.sysvmsg">
+		<title>sysvmsg</title>
+		<para>忘记加入--enable-sysvmsg参数的补救方案。</para>
+		<screen>
+cd /php-5.2.14/ext/sysvmsg
+/srv/php-5.2.17/bin/phpize
+./configure --with-php-config=/srv/php-5.2.17/bin/php-config
+make
+make install
+		</screen>
+		<screen>
+		<![CDATA[
+cat > /srv/php/etc/conf.d/sysvmsg.ini <<EOF
+extension=sysvmsg.so
+EOF
+		]]>
+		</screen>
+	</section>
+</chapter>

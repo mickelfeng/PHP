@@ -1,0 +1,21 @@
+<chapter id="php.smarty">
+	<title>Smarty</title>
+	<section>
+		<title>Datatime</title>
+		<para>now</para>
+		<screen>
+{$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'}		
+		</screen>
+	</section>
+</chapter>
+<chapter id="php.dwoo">
+	<title>Dwoo</title>
+	<section>
+		<title>Install</title>
+		<para>http://www.dwoo.org</para>
+		<screen>
+pear channel-discover pearhub.org
+pear install pearhub/Dwoo	
+		</screen>
+	</section>
+</chapter>
