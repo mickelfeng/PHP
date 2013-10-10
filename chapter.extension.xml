@@ -1057,14 +1057,9 @@ cd graphviz-2.24.0
 make && make install
 		]]>
 		</screen>
-		<para>安装xhprof</para>
+		<para>编译安装xhprof</para>
 		<screen>
 		<![CDATA[
-pecl install xhprof
-mv /srv/php-5.3.8/lib/php/extensions/no-debug-non-zts-20090626/xhprof.so /srv/php-5.3.8/lib/php/extensions/
-
-or
-
 wget http://pecl.php.net/get/xhprof
 
 tar zxf xhprof-0.9.2.tgz
@@ -1075,6 +1070,14 @@ cd extension/
 ./configure  –with-php-config=/srv/php/bin/php-config
 make && make install
 		]]>
+		</screen>
+		<para>pecl 安装</para>
+		<screen>
+# pecl install xhprof	
+		</screen>
+		<para>指定版本</para>
+		<screen>
+# pecl install xhprof-0.9.4		
 		</screen>
 		<para>安装完提示：</para>
 		<screen>
@@ -1148,6 +1151,10 @@ echo "---------------\n".
 			]]>
 			</screen>
 		</example>
+		<section>
+			<title>XHGui</title>
+			<para><ulink url="https://github.com/preinheimer/xhgui">https://github.com/preinheimer/xhgui</ulink></para>
+		</section>
 	</section>
 	<section id="extension.xdebug">
 		<title>Xdebug</title>
