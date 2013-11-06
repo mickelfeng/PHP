@@ -32,6 +32,13 @@ $replace = array('1',  '2', '3']);
 $content =  str_replace($search, $replace, $file_tpl);
 		</screen>
 	</section>
+	<section id="trim">
+		<title>去掉字符串两端空白字符</title>
+		<para>包括回车换行等等控制字符</para>
+		<screen>
+$username =  trim($username);		
+		</screen>
+	</section>
 </chapter>
 <chapter id="php.array">
 	<title>Array 数组</title>
