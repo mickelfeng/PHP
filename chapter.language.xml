@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="reference">
 	<title>Language Reference</title>
+	<section>
+		<title>常量</title>
+		<section>
+			<title>__FUNCTION__</title>		
+			<screen>
+class News{
+
+	public function __construct(){
+	}
+	public function add(){
+		echo __FUNCTION__;
+	}
+}
+
+$news = new News();
+$news->add();
+			</screen>
+		</section>
+	</section>
 	<section id="stdin">
 		<title>php://stdin &amp; php://stdout</title>
 		<screen>
