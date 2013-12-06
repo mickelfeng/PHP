@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: chapter.php.function.xml 621 2013-06-17 10:08:51Z netkiller $ -->
-<chapter id="php.string">
+<section id="php.string">
 	<title>String 字符串操作</title>
 	<section>
 		<title>英文大小写</title>
@@ -39,8 +39,8 @@ $content =  str_replace($search, $replace, $file_tpl);
 $username =  trim($username);		
 		</screen>
 	</section>
-</chapter>
-<chapter id="php.array">
+</section>
+<section id="php.array">
 	<title>Array 数组</title>
 	<para>数据相关函数</para>
 	<section>
@@ -75,8 +75,8 @@ print_r (explode(" ",$str));
 		]]>
 		</screen>
 	</section>
-</chapter>
-<chapter id="php.function">
+</section>
+<section id="php.function">
 	<title>Function</title>
 	<section>
 		<title>列出所有function</title>
@@ -261,4 +261,4 @@ print 'enters wrong login data';
 		]]>
 		</screen>
 	</section>
-</chapter>
+</section>

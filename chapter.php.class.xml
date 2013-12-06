@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: chapter.php.class.xml 510 2012-12-25 07:40:23Z netkiller $ -->
-<chapter id="class">
+<section id="class">
 	<title>PHP Classes 类与对象</title>
 	<section id="class.construct">
 		<title>构造函数和析构函数  __construct() / __destruct()</title>
@@ -194,4 +194,4 @@ $o->sayWorld();
 		]]>
 		</programlisting>
 	</section>
-</chapter>
+</section>

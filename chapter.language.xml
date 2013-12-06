@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="reference">
+<chapter id="index"><?dbhtml dir="reference"?>
 	<title>Language Reference</title>
 	<section>
 		<title>常量</title>
@@ -160,7 +160,7 @@ catch(Exception $e){
 		]]>
 		</programlisting>
 	</section>
-	<section id="language.generators">
+	<section id="generators">
 		<title>Generator 生成器</title>
 		<programlisting>
 		<![CDATA[
@@ -244,4 +244,6 @@ var_dump(iterator_to_array(month()));
 		]]>
 		</programlisting>
 	</section>
+	&chapter.php.function;
+	&chapter.php.class.xml;
 </chapter>

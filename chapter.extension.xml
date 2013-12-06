@@ -163,7 +163,7 @@ php -q memcache.php
 		</section>
 	</section>
 
-	<section id="extension.gd">
+	<section id="gd">
 		<title>php5-gd - GD module for php5</title>
 		<screen>
 $ apt-cache search php|grep gd
@@ -179,7 +179,7 @@ $ sudo apt-get install libapache2-modxslt php-xml-htmlsax3 php-xml-parser php-xm
 	</section>
 <section id="database">
 	<title>Database Extensions</title>
-	<section id="extension.sqlite">
+	<section id="sqlite">
 		<title>sqlite</title>
 		<screen>
 		<![CDATA[
@@ -198,7 +198,7 @@ EOF
 		]]>
 		</screen>
 	</section>
-	<section id="extension.mysqli">
+	<section id="mysqli">
 		<title>mysqli</title>
 		<screen>
 		<![CDATA[
@@ -216,7 +216,7 @@ EOF
 		]]>
 		</screen>
 	</section>
-	<section id="extension.mongo">
+	<section id="mongo">
 		<title>MongoDB</title>
 		<screen>
 sudo pecl install mongo
@@ -226,7 +226,7 @@ vim /srv/php/etc/conf.d/mongo.ini
 extension=mongo.so
 		</screen>
 	</section>
-	<section id="extension.php-redis">
+	<section id="php-redis">
 		<title>php-redis.x86_64 : Extension for communicating with the Redis key-value store</title>
 		<section>
 			<title>pecl 安装</title>
@@ -296,13 +296,13 @@ session.save_path = "tcp://host1:6379?weight=1, tcp://host2:6379?weight=2&timeou
 		</section>
 	</section>
 
-	<section id="extension.pgsql">
+	<section id="pgsql">
 		<title>php5-pgsql - PostgreSQL module for php5</title>
 		<screen>
 $ sudo apt-get install php5-pgsql
 		</screen>
 	</section>
-	<section id="extension.mssql">
+	<section id="mssql">
 		<title>PHP connect SQL Server under unix like</title>
 		<para>Sql Server 支持由Freetds提供</para>
 		<para>主页：<ulink url="http://www.freetds.org/">http://www.freetds.org/</ulink></para>
@@ -641,7 +641,7 @@ zlib
 the ionCube PHP Loader
 		</screen>
 	</section>
-	<section id="extension.zendoptimizer">
+	<section id="zendoptimizer">
 		<title>ZendOptimizer</title>
 		<screen>
 # cd /usr/local/src
@@ -921,13 +921,13 @@ suhosin.upload.verification_script        上传文件检查脚本
 		<para>其他更深入的防护措施，还有待研究，参考suhosin选项
 http://www.hardened-php.net/suhosin/configuration.html</para>
 	</section>
-	<section id="extension.freetype">
+	<section id="freetype">
 		<title>freetype</title>
 		<screen>
 
 		</screen>
 	</section>
-	<section id="extension.xcache">
+	<section id="xcache">
 		<title>XCache</title>
 		<section>
 			<title>apt-get</title>
@@ -1039,7 +1039,7 @@ XCache
 		</section>
 	</section>
 
-	<section id="extension.xhprof">
+	<section id="xhprof">
 		<title>XHProf</title>
 		<para>XHProf是facebook开源出来的一个php轻量级的性能分析工具，跟Xdebug类似，但性能开销更低，还可以用在生产环境中，也可以由程序开 关来控制是否进行profile。</para>
 		<para>https://github.com/facebook/xhprof</para>
@@ -1156,7 +1156,7 @@ echo "---------------\n".
 			<para><ulink url="https://github.com/preinheimer/xhgui">https://github.com/preinheimer/xhgui</ulink></para>
 		</section>
 	</section>
-	<section id="extension.xdebug">
+	<section id="xdebug">
 		<title>Xdebug</title>
 		<para>Xdebug是一个开放源代码的PHP程序调试器(即一个Debug工具)，可以用来跟踪，调试和分析PHP程序的运行状况。</para>
 		<screen>
@@ -1250,7 +1250,7 @@ xdebug.remote_port
 			<para>WinCacheGrind是一款Windows下的可以图形化查看Xdebug输出的日志分析文件的软件</para>
 		</section>
 	</section>
-	<section id="extension.uploadprogress">
+	<section id="uploadprogress">
 		<title>UploadProgress</title>
 		<para>UploadProgress是一个用于提供用户文件上传进度查看功能的PHP扩展，以便提高应用的用户体验.</para>
 		<screen>
@@ -1287,7 +1287,7 @@ $data = msgpack_unpack($msg);
 		]]>
 		</screen>
 	</section>
-	<section id="extension.iconv">
+	<section id="iconv">
 		<title>iconv</title>
 		<screen>
 cd /usr/local/src/
@@ -1311,7 +1311,7 @@ iconv
 /srv/php-5.2.17/sbin/php-fpm restart
 		</screen>
 	</section>
-	<section id="extension.imagick">
+	<section id="imagick">
 		<title>imagick</title>
 		<screen>
 		<![CDATA[
@@ -1324,7 +1324,7 @@ EOF
 		]]>
 		</screen>
 	</section>
-	<section id="extension.sysvmsg">
+	<section id="sysvmsg">
 		<title>sysvmsg</title>
 		<para>忘记加入--enable-sysvmsg参数的补救方案。</para>
 		<screen>

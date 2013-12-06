@@ -119,8 +119,6 @@ expose_php Off
 
 </chapter>
 	&chapter.language.xml;
-	&chapter.php.function;
-	&chapter.php.class.xml;
 	&chapter.extension.xml;
 	&chapter.application.xml;
 	&chapter.frameworks.xml;

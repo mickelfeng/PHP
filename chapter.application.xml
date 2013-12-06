@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: chapter.application.xml 662 2013-08-14 02:46:24Z netkiller $ -->
-<chapter id="php.application">
+<chapter id="index"><?dbhtml dir="application"?>
 	<title>PEAR - PHP Extension and Application Repository</title>
 	<section id="pear">
 		<title>PEAR 使用说明</title>
@@ -25,7 +25,7 @@ $ sudo apt-get install php-pear
 			<command>pear uninstall Packages</command>
 		</section>
 	</section>
-	<section>
+	<section id="pyrus">
 		<title>Pyrus</title>
 		<screen>
 wget http://pear2.php.net/pyrus.phar
@@ -38,7 +38,7 @@ $ php pyrus.phar install PEAR2_HTTP_Request
 $ php pyrus.phar list-packages
 		</screen>
 	</section>
-	<section>
+	<section id="pirum">
 		<title>Pirum is a simple PEAR Channel Server Manager</title>
 		<ulink url="http://pirum.sensiolabs.org/">http://pirum.sensiolabs.org/</ulink>
 		<screen>
@@ -48,7 +48,7 @@ $ pear install pirum/Pirum
 $ php pirum
 		</screen>
 	</section>
-	<section id="php.phpunit">
+	<section id="phpunit">
 		<title>PHPUnit - Unit testing framework for PHP</title>
 		<procedure>
 			<title>PHPUnit2</title>
@@ -92,7 +92,7 @@ echo "</ul>\n";
 			</programlisting>
 		</example>
 	</section>
-	<section id="extension.propel">
+	<section id="propel">
 		<title>Propel - smart, easy object persistence</title>
 			<para>ORM （ object relation mapping ）</para>
 			<para>即将数据库表映射成对像，实现通过实例化对像来访问数据库</para>
@@ -138,7 +138,7 @@ D:\php-5.1.4-Win32>
 			</screen>
 		</section>
 	</section>
-	<section id="extension.plua">
+	<section id="plua">
 		<title>Lua for PHP extension</title>
 		<para><ulink url="http://code.google.com/p/plua/" /></para>
 	</section>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="frameworks">
+<chapter id="index"><?dbhtml dir="frameworks"?>
 	<title>Frameworks</title>
 	<para><ulink url="http://www.phpframeworks.com/">PHP Frameworks 比较</ulink></para>
-<section id="frameworks.codeigniter">
+<section id="codeigniter">
 	<title>CodeIgniter - Open source PHP web application framework</title>
 	<para>homepage: http://www.codeigniter.com/</para>
 	<para>下载解压后复制到 /usr/share/php/</para>
@@ -120,7 +120,7 @@ php pyrus.phar install pear/PHP_CodeSniffer-1.3.5
 		</screen>
 	</section>
 </section>
-<section id="frameworks.fuel">
+<section id="fuel">
 	<title>Fuel PHP</title>
 	<para>Fuel PHP 源自 CodeIgniter</para>
 	<section>
@@ -236,10 +236,10 @@ server {
 	<para>Kohana 源自 CodeIgniter</para>
 	<para><ulink url="http://kohanaframework.org/" /></para>
 </section>
-<section id="frameworks.yii">
+<section id="yii">
 	<title>Yii</title>
 </section>
-	<section id="frameworks.zend_framework">
+	<section id="zend_framework">
 		<title>Zend Framework</title>
 		<section>
 			<title>Install Zend Framework</title>
