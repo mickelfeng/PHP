@@ -40,10 +40,43 @@ fclose($handle);
 		<screen>
 $ cat /etc/passwd | ./test.php
 		</screen>
+		<para>单行使用</para>
+		<programlisting>
+# cat /etc/passwd | php -r 'echo file_get_contents("php://stdin");'
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+uucp:x:10:14:uucp:/var/spool/uucp:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+gopher:x:13:30:gopher:/var/gopher:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+vcsa:x:69:69:virtual console memory owner:/dev:/sbin/nologin
+saslauth:x:499:76:"Saslauthd user":/var/empty/saslauth:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+ntp:x:38:38::/etc/ntp:/sbin/nologin
+nginx:x:498:498:Nginx web server:/var/lib/nginx:/sbin/nologin
+apache:x:48:48:Apache:/var/www:/sbin/nologin
+mysql:x:497:497:MySQL server:/var/lib/mysql:/bin/bash
+www:x:80:80:Web Application:/www:/bin/bash		
+		</programlisting>
+		<para>取一行</para>
+		<programlisting>
+# cat /etc/passwd | php -r 'echo fgets(STDIN);'
+root:x:0:0:root:/root:/bin/bash		
+		</programlisting>
 	</section>
 	<section id="exception">
 		<title>Exception</title>
-		<screen>
+		<programlisting>
 		<![CDATA[
 $ cat exception1.php
 <?php
@@ -66,9 +99,9 @@ Stack trace:
 #0 /home/neo/workspace/example/PHP/exception.php(8): test1()
 #1 {main}
 		]]>
-		</screen>
+		</programlisting>
 
-		<screen>
+		<programlisting>
 		<![CDATA[
 $ cat exception2.php
 <?php
@@ -91,8 +124,8 @@ Stack trace:
 #0 /home/neo/workspace/example/PHP/exception2.php(8): test2()
 #1 {main}
 		]]>
-		</screen>
-		<screen>
+		</programlisting>
+		<programlisting>
 		<![CDATA[
 $ cat exception.php
 <?php
@@ -125,6 +158,90 @@ catch(Exception $e){
 	print( $e->__toString() );
 }
 		]]>
-		</screen>
+		</programlisting>
+	</section>
+	<section id="language.generators">
+		<title>Generator 生成器</title>
+		<programlisting>
+		<![CDATA[
+<?php
+function week() {
+    for ($i = 1; $i <= 7; $i++) {
+        // Note that $i is preserved between yields.
+        yield $i;
+    }
+}
+
+$generator = week();
+foreach ($generator as $value) {
+    echo "$value\n";
+}
+?>
+		]]>
+		</programlisting>
+		<programlisting>
+		<![CDATA[
+<?php
+/* The input is semi-colon separated fields, with the first
+ * field being an ID to use as a key. */
+
+$input = <<<'EOF'
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+uucp:x:10:14:uucp:/var/spool/uucp:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+gopher:x:13:30:gopher:/var/gopher:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+vcsa:x:69:69:virtual console memory owner:/dev:/sbin/nologin
+saslauth:x:499:76:"Saslauthd user":/var/empty/saslauth:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+ntp:x:38:38::/etc/ntp:/sbin/nologin
+nginx:x:498:498:Nginx web server:/var/lib/nginx:/sbin/nologin
+apache:x:48:48:Apache:/var/www:/sbin/nologin
+mysql:x:497:497:MySQL server:/var/lib/mysql:/bin/bash
+www:x:80:80:Web Application:/www:/bin/bash
+EOF;
+
+function input_parser($input) {
+    foreach (explode("\n", $input) as $line) {
+        $fields = explode(':', $line);
+        $id = array_shift($fields);
+
+        yield $id => $fields;
+    }
+}
+
+foreach (input_parser($input) as $id => $fields) {
+    echo "$id:\n";
+    foreach($fields as $item){
+        echo "    $item\n";
+    }
+}
+?>		
+		]]>
+		</programlisting>
+		<programlisting>
+		<![CDATA[
+<?php
+function month() {
+    foreach (range(1, 31) as $i) {
+        yield $i;
+    }
+}
+
+var_dump(iterator_to_array(month()));
+?>		
+		]]>
+		</programlisting>
 	</section>
 </chapter>
