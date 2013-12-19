@@ -540,5 +540,14 @@ $frontController->dispatch();
 			</screen>
 		</section>
 	</section>
-
+	<section id="propel">
+		<title>Propel</title>
+		<para>Propel is an open-source Object-Relational Mapping (ORM) for SQL-Databases in PHP 5.4. It allows you to access your database using a set of objects, providing a simple API for storing and retrieving data.</para>
+		<para>But not only plain ORM but it also provides database schema migration, reverse engineering of existing database and much more.</para>
+		<para>http://propelorm.org/</para>
+	</section>
+	<section id="doctrine">
+		<title>Doctrine</title>
+		<para></para>
+	</section>
 </chapter>
