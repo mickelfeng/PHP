@@ -27,7 +27,19 @@ $ sudo apt-get install php-pear
 	</section>
 	<section id="composer">
 		<title>Composer</title>
-
+		<section>
+			<title>安装 Composer</title>
+			<screen>
+curl -sS https://getcomposer.org/installer | PHP			
+			</screen>
+		</section>
+		<section>
+			<title>安装 composer.json</title>
+			<para>创建 composer.json 文件，然后运行</para>
+			<screen>
+php composer.phar install			
+			</screen>
+		</section>
 	</section>
 	<section id="pyrus">
 		<title>Pyrus</title>

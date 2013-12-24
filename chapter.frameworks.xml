@@ -540,14 +540,50 @@ $frontController->dispatch();
 			</screen>
 		</section>
 	</section>
-	<section id="propel">
-		<title>Propel</title>
-		<para>Propel is an open-source Object-Relational Mapping (ORM) for SQL-Databases in PHP 5.4. It allows you to access your database using a set of objects, providing a simple API for storing and retrieving data.</para>
-		<para>But not only plain ORM but it also provides database schema migration, reverse engineering of existing database and much more.</para>
-		<para>http://propelorm.org/</para>
+<section id="propel">
+	<title>Propel</title>
+	<para>Propel is an open-source Object-Relational Mapping (ORM) for SQL-Databases in PHP 5.4. It allows you to access your database using a set of objects, providing a simple API for storing and retrieving data.</para>
+	<para>But not only plain ORM but it also provides database schema migration, reverse engineering of existing database and much more.</para>
+	<para>http://propelorm.org/</para>
+</section>
+<section id="doctrine">
+	<title>Doctrine</title>
+	<para></para>
+	<section>
+		<title>example</title>
+		<programlisting>
+		<![CDATA[
+<?php
+use Doctrine\Common\ClassLoader;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Configuration;
+
+require 'Doctrine/Common/ClassLoader.php';
+
+$classLoader = new ClassLoader('Doctrine', '/www/DoctrineDBAL-2.3.4/');
+$classLoader->register();
+
+$config = new Configuration();
+
+$connectionParams = array(
+    'dbname' => 'test',
+    'user' => 'www',
+    'password' => 'passw0rd',
+    'host' => '192.168.2.1',
+    'driver' => 'pdo_mysql',
+);
+$conn = DriverManager::getConnection($connectionParams, $config);
+
+$sql = "SELECT * FROM members limit 5";
+$stmt = $conn->query($sql);
+
+while ($row = $stmt->fetch()) {
+    printf("%s\r\n", $row['username']);
+}
+		]]>
+		</programlisting>
+
 	</section>
-	<section id="doctrine">
-		<title>Doctrine</title>
-		<para></para>
-	</section>
+</section>
+
 </chapter>
