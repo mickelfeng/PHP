@@ -13,7 +13,7 @@
 # make install
 	]]>
 	</screen>
-	<section id="extension。exampe">
+	<section id="extension.exampe">
 		<title>Extension Example</title>
 		<para>下面我们开始分部讲解，首先创建一个扩展。</para>
 		<screen>

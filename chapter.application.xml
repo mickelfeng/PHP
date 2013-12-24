@@ -25,6 +25,10 @@ $ sudo apt-get install php-pear
 			<command>pear uninstall Packages</command>
 		</section>
 	</section>
+	<section id="composer">
+		<title>Composer</title>
+
+	</section>
 	<section id="pyrus">
 		<title>Pyrus</title>
 		<screen>
@@ -138,18 +142,20 @@ D:\php-5.1.4-Win32>
 			</screen>
 		</section>
 	</section>
-	<section id="plua">
-		<title>Lua for PHP extension</title>
-		<para><ulink url="http://code.google.com/p/plua/" /></para>
+	<section id="doctrine">
+		<title>Doctrine</title>
+		<screen>
+pear channel-discover pear.doctrine-project.org
+pear install doctrine/DoctrineDBAL-2.3.4
+pear install doctrine/DoctrineORM-2.3.4
+		</screen>
+		<para>安装目录 /path/to/php/lib/php/Doctrine/</para>
 	</section>
-	<section>
-		<title>libuv php extension</title>
-		<para>https://github.com/chobie/php-uv</para>
-	</section>
+
 </chapter>
 
 <chapter id="app">
-	<title>Application</title>
+	<title>3rdpary Application</title>
 	<section id="php.phpmailer">
 		<title>phpmailer</title>
 		<programlisting>
