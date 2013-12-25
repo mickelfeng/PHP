@@ -1346,7 +1346,7 @@ EOF
 		<title>Lua for PHP extension</title>
 		<para><ulink url="http://code.google.com/p/plua/" /></para>
 	</section>
-	<section>
+	<section id="libuv">
 		<title>libuv php extension</title>
 		<para>https://github.com/chobie/php-uv</para>
 	</section>	

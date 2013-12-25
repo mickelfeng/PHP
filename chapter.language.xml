@@ -244,6 +244,5 @@ var_dump(iterator_to_array(month()));
 		]]>
 		</programlisting>
 	</section>
-	&chapter.php.function;
 	&chapter.php.class.xml;
 </chapter>

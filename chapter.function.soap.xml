@@ -1,0 +1,350 @@
+<section id="soap">
+	<title>Web Services / SOAP</title>
+	<section>
+		<title>Server</title>
+		<para></para>
+		<screen>
+		<![CDATA[
+'encoding'=>'UTF-8'
+		]]>
+		</screen>
+		<section>
+			<title>addFunction</title>
+			<programlisting language="php">
+			<![CDATA[
+function echoString($inputString)
+{
+    return $inputString;
+}
+
+function echoTwoStrings($inputString1, $inputString2)
+{
+    return array("outputString1" => $inputString1,
+                 "outputString2" => $inputString2);
+}
+
+$server = new SoapServer(null, array('uri' => "http://192.168.2.15"));
+$server->addFunction("echoString");
+$server->addFunction("echoTwoStrings");
+
+$server->addFunction(SOAP_FUNCTIONS_ALL);
+$server->handle();
+			]]>
+			</programlisting>
+
+			<programlisting language="php">
+			<![CDATA[
+<?php
+
+$options = array('uri' => "http://192.168.2.15",
+                'location'=>'http://192.168.2.15/soapserver.php',
+                'trace'=>true);
+$client = new SoapClient(null, $options);
+echo $client->echoString("aaa");
+print_r($client->echoTwoStrings('B','A'));
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>setClass</title>
+			<programlisting>
+			<![CDATA[
+<?php
+Class Test{
+    public function hello($val){
+        return ($val);
+    }
+	public function sum($v1,$v2){
+		return($v1+$v2);
+	}
+}
+
+$server = new SoapServer(null, array('uri' => "http://192.168.2.15"));
+$server->setClass("Test");
+$server->handle();
+			]]>
+			</programlisting>
+			<programlisting>
+			<![CDATA[
+<?php
+$options = array('uri' => "http://192.168.2.15",
+                'location'=>'http://192.168.2.15/soapserver.php',
+                'trace'=>true);
+$client = new SoapClient(null, $options);
+echo $client->hello("Hello");
+print_r($client->sum(10,20));
+			]]>
+			</programlisting>
+		</section>
+	</section>
+	<section>
+		<title>SoapClient</title>
+		<para>$options</para>
+		<sidebar>
+			<title>compression</title>
+			<screen>
+$client = new SoapClient("some.wsdl",
+  array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
+			</screen>
+		</sidebar>
+		<para>ssl_method</para>
+		<screen>
+'ssl_method' => SOAP_SSL_METHOD_SSLv3
+		</screen>
+	</section>
+	<section>
+		<title>HTTP 验证</title>
+		<para>配置 Nginx</para>
+		<screen>
+		<![CDATA[
+server {
+    listen       80;
+    server_name  api.example.com;
+
+    charset utf-8;
+    access_log  /var/log/nginx/api.example.com.access.log  main;
+    auth_basic            "Login";
+    auth_basic_user_file  htpasswd;
+
+    location / {
+        root   /www/example.com/api.example.com;
+        index  index.html index.php;
+
+    }
+    ...
+    ...
+}    		
+		]]>
+		</screen>
+		<para>创建密码文件，请参考《Netkiller Web 手札》</para>
+		<screen>
+# cat /etc/nginx/htpasswd 
+neo:$apr1$mnT/iqg5$gn7m7xx.eflX9VK6p8hyj0		
+		</screen>
+		<para>SoapClient 需要 login与password两个选项</para>
+		<screen>
+		<![CDATA[
+<?php
+
+$options = array('uri' => "http://api.example.com",
+                'location'=>'http://api.example.com/soapserver.php',
+				'login'=>'neo',
+				'password'=>'chen',
+                'trace'=>true
+				);
+$client = new SoapClient(null, $options);
+
+try { 
+	echo $client->hello("Hello");
+	print_r($client->sum(10,20));
+   
+} 
+catch (Exception $e) 
+{ 
+    echo 'Caught exception: ',  $e->getMessage(), "\n"; 
+} 
+		]]>
+		</screen>
+	</section>
+
+ 	<section>
+		<title>Example</title>
+		<section>
+			<title>addFunction 实例</title>
+			<para>soapfunc.php</para>
+			<programlisting language="php">
+			<![CDATA[
+$ cat soapfunc.php
+<?php
+
+function reverse($str){
+
+        $retval = '';
+
+        if(strlen($str) < 1) {
+
+                return new SoapFault('Client','','Invalid string');
+
+        }
+
+        for ($i = 1; $i <= strlen($str); $i++) {
+
+                $retval .= $str[(strlen($str) - $i)];
+
+        }
+
+        return $retval;
+
+}
+
+function sum($num1, $num2) {
+
+        if (trim($num1) != intval($num1)) {
+
+                return new SoapFault('Client','','The first number is invalid');
+
+        }
+
+        if (trim($num2) != intval($num2)) {
+
+                return new SoapFault('Client','','The second number is invalid');
+
+        }
+
+        return ($num1 + $num2);
+
+}
+
+function gettime(){
+
+        $time=strftime("%Y-%m-%d %H:%M:%S");
+
+        return $time;
+
+}
+
+?>
+			]]>
+			</programlisting>
+			<para>soapserver.php</para>
+
+			<programlisting>
+			<![CDATA[
+$ cat soapserver.php
+<?php
+include_once('soapfunc.php');
+
+$soap = new SoapServer(null,array('uri'=>"http://netkiller.6600.org/"));
+
+$soap->addFunction('reverse');
+
+$soap->addFunction('sum');
+
+$soap->addFunction('gettime');
+
+$soap->addFunction(SOAP_FUNCTIONS_ALL);
+
+$soap->handle();
+
+?>
+			]]>
+			</programlisting>
+			<para>soapclient.php</para>
+			<programlisting>
+			<![CDATA[
+$ cat soapclient.php
+<?php
+
+try {
+
+        $client = new SoapClient(null, array('location' =>"http://netkiller.6600.org/soapserver.php",'uri' => "http://netkiller.6600.org/"));
+
+        $str = "This string will be reversed";
+
+        $reversed = $client->reverse($str);
+
+        echo "If you reverse '",$str,"', you get '",$reversed,"' </br>";
+
+        $n1=50;
+
+        $n2=130;
+
+        $sum = $client->sum($n1,$n2);
+
+        echo "If you try ",$n1,"+",$n2,", you will get ",$sum,"</br>";
+
+        echo "The system time is: ",$client->gettime();
+
+} catch (SoapFault $fault){
+
+        echo "Fault! code:",$fault->faultcode,", string: ",$fault->faultstring;
+
+}
+
+?>
+			]]>
+			</programlisting>
+		</section>
+	</section>
+</section>
+
+	
+	<chapter>
+		<title>SSL</title>
+		<screen>
+openssl genrsa -out server.key 2048
+openssl req -new -key server.key -out server.csr
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+		</screen>
+		<screen>
+		<![CDATA[
+server {
+    server_name YOUR_DOMAINNAME_HERE;
+    listen 443;
+    ssl on;
+    ssl_certificate /etc/nginx/conf/server.crt;
+    ssl_certificate_key /etc/nginx/conf/server.key;
+}
+		]]>
+		</screen>
+			
+
+			<screen>
+			<![CDATA[
+# Create the CA Key and Certificate for signing Client Certs
+openssl genrsa -des3 -out ca.key 4096
+openssl req -new -x509 -days 365 -key ca.key -out ca.crt
+
+# Create the Server Key, CSR, and Certificate
+openssl genrsa -des3 -out server.key 1024
+openssl req -new -key server.key -out server.csr
+
+# We're self signing our own server cert here.  This is a no-no in production.
+openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
+
+# Create the Client Key and CSR
+openssl genrsa -des3 -out client.key 1024
+openssl req -new -key client.key -out client.csr
+
+# Sign the client certificate with our CA cert.  Unlike signing our own server cert, this is what we want to do.
+openssl x509 -req -days 365 -in client.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out client.crt
+			]]>
+			</screen>
+
+openssl genrsa -out ca.key 4096
+openssl req -new -x509 -days 365 -key ca.key -out ca.crt
+
+openssl genrsa -out server.key 1024
+openssl req -new -key server.key -out server.csr
+openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
+
+openssl genrsa -out client.key 1024
+openssl req -new -key client.key -out client.csr
+openssl x509 -req -days 365 -in client.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out client.crt
+			<screen>
+			<![CDATA[
+server {
+    listen        443;
+    ssl on;
+    server_name example.com;
+
+    ssl_certificate      /etc/nginx/certs/server.crt;
+    ssl_certificate_key  /etc/nginx/certs/server.key;
+    ssl_client_certificate /etc/nginx/certs/ca.crt;
+    ssl_verify_client optional;
+
+    location / {
+        root           /var/www/example.com/html;
+    }
+}
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+# curl -v -s -k --key client.key --cert client.crt https://192.168.2.15/
+			]]>
+			</screen>
+			<screen>
+# cat client.crt client.key > client.pem
+			</screen>
+	</chapter>

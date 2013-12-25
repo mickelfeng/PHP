@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 	<!ENTITY part.php.xml		 	SYSTEM "part.php.xml">
 	<!ENTITY chapter.php.xml		 SYSTEM "chapter.php.xml">
-	<!ENTITY chapter.php.function	 SYSTEM "chapter.php.function.xml">
+	<!ENTITY chapter.function.xml	 SYSTEM "chapter.function.xml">
 	<!ENTITY chapter.php.class.xml	 SYSTEM "chapter.php.class.xml">
 	<!ENTITY chapter.extension.xml	 SYSTEM "chapter.extension.xml">
 	<!ENTITY chapter.application.xml SYSTEM "chapter.application.xml">
 	<!ENTITY chapter.frameworks.xml	 SYSTEM "chapter.frameworks.xml">
-	<!ENTITY chapter.php.soap.xml	 SYSTEM "chapter.php.soap.xml">
+	<!ENTITY chapter.function.soap.xml	 SYSTEM "chapter.function.soap.xml">
 	<!ENTITY chapter.debug.xml		 SYSTEM "chapter.debug.xml">
 	<!ENTITY chapter.ext.xml		 SYSTEM "chapter.ext.xml">
 	<!ENTITY chapter.faq.xml		 SYSTEM "chapter.faq.xml">
