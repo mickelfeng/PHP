@@ -79,8 +79,7 @@ print_r (explode(" ",$str));
 		</screen>
 	</section>
 </section>
-<section id="php.function">
-	<title>Function</title>
+
 	<section>
 		<title>列出所有function</title>
 		<programlisting>
@@ -264,11 +263,29 @@ print 'enters wrong login data';
 		]]>
 		</screen>
 	</section>
-</section>
+	<section id="object">
+		<title>Classes/Objects</title>	
+		<section id="class_exists">
+			<title>class_exists</title>
+			<para>判断 class 是否存在</para>
+			<screen>
+if (class_exists('MyClass')) {
+    $myclass = new MyClass();
+}	
+			</screen>
+		</section>
+	</section>
+	<section id="error">
+		<title>ERROR 报告与推出函数是</title>
+		<screen>
+trigger_error("Cannot loading interface!", E_USER_ERROR);
+		
+die("Cannot loading interface!");		
+		</screen>
+	</section>
 	&chapter.function.soap.xml;
-<!-- <section>
-	<title></title>
-</section> -->
+	&chapter.function.pdo.xml;
+	
 </chapter>
 
 

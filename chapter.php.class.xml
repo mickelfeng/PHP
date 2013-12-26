@@ -21,7 +21,16 @@ class MyClass {
 $obj = new MyClass();
 ?>
 		]]>
+		</programlisting>
+		<programlisting>
+		<![CDATA[
+class Members extends Common{
 
+	public function __construct() {
+		parent::__construct();
+	}
+}
+		]]>
 		</programlisting>
 	</section>
 	<section id="traits">

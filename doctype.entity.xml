@@ -6,7 +6,8 @@
 	<!ENTITY chapter.extension.xml	 SYSTEM "chapter.extension.xml">
 	<!ENTITY chapter.application.xml SYSTEM "chapter.application.xml">
 	<!ENTITY chapter.frameworks.xml	 SYSTEM "chapter.frameworks.xml">
-	<!ENTITY chapter.function.soap.xml	 SYSTEM "chapter.function.soap.xml">
+	<!ENTITY chapter.function.soap.xml	SYSTEM "chapter.function.soap.xml">
+	<!ENTITY chapter.function.pdo.xml	SYSTEM "chapter.function.pdo.xml">
 	<!ENTITY chapter.debug.xml		 SYSTEM "chapter.debug.xml">
 	<!ENTITY chapter.ext.xml		 SYSTEM "chapter.ext.xml">
 	<!ENTITY chapter.faq.xml		 SYSTEM "chapter.faq.xml">

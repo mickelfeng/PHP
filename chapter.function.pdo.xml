@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="pdo">
+	<title>PHP Data Objects (PDO)</title>
+	<section>
+		<title>fetch 返回数组</title>
+		<screen>
+$stmt->fetch(PDO::FETCH_ASSOC);		
+		</screen>
+	</section>
+</chapter>
