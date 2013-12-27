@@ -147,7 +147,7 @@ catch (Exception $e)
 		</screen>
 	</section>
 
- 	<section>
+ 	<section id="soap.example">
 		<title>Example</title>
 		<section>
 			<title>addFunction 实例</title>

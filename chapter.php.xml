@@ -125,4 +125,5 @@ expose_php Off
 	&chapter.frameworks.xml;
 	&chapter.ext.xml;
 	&chapter.debug.xml;
+	&chapter.miscellaneous.xml;
 	&chapter.faq.xml;

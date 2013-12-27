@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="ext">
+<chapter id="index"><?dbhtml dir="ext"?>
 	<title>PHP Extension 扩展开发</title>
 	<para>创建一个扩展只需要下面几个步骤</para>
 	<screen>

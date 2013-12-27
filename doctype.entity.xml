@@ -13,3 +13,4 @@
 	<!ENTITY chapter.faq.xml		 SYSTEM "chapter.faq.xml">
 
 	<!ENTITY chapter.language.xml	 SYSTEM "chapter.language.xml">
+	<!ENTITY chapter.miscellaneous.xml	SYSTEM "chapter.miscellaneous.xml">

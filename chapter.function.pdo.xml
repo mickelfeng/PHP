@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="pdo">
+<section id="pdo">
 	<title>PHP Data Objects (PDO)</title>
-	<section>
-		<title>fetch 返回数组</title>
+	<section id="driver_options">
+		<title>$driver_options</title>
+		<para>持久链接</para>
 		<screen>
-$stmt->fetch(PDO::FETCH_ASSOC);		
+PDO::ATTR_PERSISTENT => true,
+		</screen>
+		<para>压缩传输，适合远程连接数据库，压缩查询结果后返回给客户端</para>
+		<screen>
+PDO::MYSQL_ATTR_COMPRESS => true
+		</screen>
+		<para>初始化命令，就是链接数据库首先会运行的命令</para>
+		<screen>
+PDO::MYSQL_ATTR_INIT_COMMAND => "set names ".$cfg['charset'],
 		</screen>
 	</section>
-</chapter>
+	<section id="setAttribute">
+		<title>setAttribute</title>
+		<screen>
+$db = new MyPDO();
+$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);		
+		</screen>
+	</section>
+	<section id="PDOStatement">
+		<title>The PDOStatement class</title>
+		<section>
+			<title>fetch 返回数组</title>
+			<screen>
+$stmt->fetch(PDO::FETCH_ASSOC);
+			</screen>
+		</section>
+	</section>
+</section>
