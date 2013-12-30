@@ -30,14 +30,14 @@ $ sudo apt-get install php-pear
 		<section>
 			<title>安装 Composer</title>
 			<screen>
-curl -sS https://getcomposer.org/installer | PHP			
+curl -sS https://getcomposer.org/installer | PHP
 			</screen>
 		</section>
 		<section>
 			<title>安装 composer.json</title>
 			<para>创建 composer.json 文件，然后运行</para>
 			<screen>
-php composer.phar install			
+php composer.phar install
 			</screen>
 		</section>
 	</section>
@@ -163,5 +163,30 @@ pear install doctrine/DoctrineORM-2.3.4
 		</screen>
 		<para>安装目录 /path/to/php/lib/php/Doctrine/</para>
 	</section>
+	<section id="cache">
+		<title>Cache</title>
+		<screen>
+# pear install Cache
+		</screen>
+		<para>文件缓存例子</para>
+		<screen>
+		<![CDATA[
+<?php
+require_once('Cache.php');
 
+$cache = new Cache('file', array('cache_dir' => '/tmp/cache/') ); 
+
+$id = $cache->generateID('test');
+
+if ($data = $cache->get($id)) { 
+    print "Cache hit. Data: $data";
+
+} else { 
+    $data = 'Hello world!!!'; 
+    $cache->save($id, $data); 
+    print 'Cache miss.'; 
+}		
+		]]>
+		</screen>
+	</section>
 </chapter>

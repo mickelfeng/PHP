@@ -116,7 +116,10 @@ expose_php Off
 			</screen>
 		</section>
 	</section>
-
+	<section id="pdt">
+		<title>Eclipse PDT</title>
+		<para>http://projects.eclipse.org/projects/tools.pdt</para>
+	</section>
 </chapter>
 	&chapter.language.xml;
 	&chapter.function.xml;
