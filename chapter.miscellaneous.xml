@@ -174,4 +174,32 @@ To run the server, put the code into a file example.php and execute it with the 
 Server running at http://127.0.0.1:1337
 		</programlisting>
 	</section>
+	<section id="id_number">
+		<title>身份证校验</title>
+		<programlisting>
+		<![CDATA[
+<?php 
+
+function check_id_number($no){
+	if (strlen($no) != 18){
+		return false;
+	}
+	$sigma = 0;
+	$wi = array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2); 
+	$ai = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'); 
+	for ($i = 0;$i < 17;$i++) { 
+	    $sigma += ((int) $no{$i}) * $wi[$i]; 
+	}
+	
+	if (substr($no,17) == $ai[($sigma % 11)]){	
+		return true;
+	}else{
+		return false; 
+	}
+}
+
+echo check_id_number('330702198003090915');		
+		]]>
+		</programlisting>
+	</section>
 </chapter>
