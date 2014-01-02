@@ -2,6 +2,7 @@
 <!-- $Id: chapter.extension.xml 662 2013-08-14 02:46:24Z netkiller $ -->
 <chapter id="index"><?dbhtml dir="extension"?>
 	<title>PECL :: The PHP Extension Community Library</title>
+	<para><ulink url="http://pecl.php.net/"/></para>
 	<section id="apc">
 		<title>php-apc - APC (Alternative PHP Cache) module for PHP 5</title>
 		<screen>
@@ -738,6 +739,25 @@ EOF
 php -m | grep pcntl
 		</screen>
 	</section>
+	<section id="pthreads">
+		<title>pthreads</title>
+		<para>编译PHP时需要加入 --enable-maintainer-zts 选项才能安装pthreads</para>
+		<screen>
+# pecl install pthread
+		</screen>
+		<para>配置文件</para>
+		<screen>
+		<![CDATA[
+cat > /srv/php-5.5.7/etc/conf.d/pthreads.ini <<EOF
+extension=pthreads.so
+EOF
+		]]>
+		</screen>
+		<screen>
+$ php -m |grep pthreads
+pthreads		
+		</screen>
+	</section>
 	<section id="mbstring">
 		<title>mbstring</title>
 		<screen>
@@ -1073,11 +1093,11 @@ make && make install
 		</screen>
 		<para>pecl 安装</para>
 		<screen>
-# pecl install xhprof	
+# pecl install xhprof
 		</screen>
 		<para>指定版本</para>
 		<screen>
-# pecl install xhprof-0.9.4		
+# pecl install xhprof-0.9.4
 		</screen>
 		<para>安装完提示：</para>
 		<screen>
@@ -1349,5 +1369,5 @@ EOF
 	<section id="libuv">
 		<title>libuv php extension</title>
 		<para>https://github.com/chobie/php-uv</para>
-	</section>	
+	</section>
 </chapter>
