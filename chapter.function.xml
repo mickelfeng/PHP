@@ -27,6 +27,17 @@ ucwords(): 该函数将传入的字符串的每个单词的首字符变成大写
 
 		</screen>
 	</section>
+	<section id="sprintf">
+		<title>sprintf</title>
+		<programlisting>
+		<![CDATA[
+$str = "Hello";
+$number = 123;
+$txt = sprintf("%s world. Day number %u",$str,$number);
+echo $txt;
+		]]>
+		</programlisting>
+	</section>
 	<section id="str_replace">
 		<title>str_replace</title>
 		<screen>
@@ -273,6 +284,32 @@ if (class_exists('MyClass')) {
     $myclass = new MyClass();
 }
 			</screen>
+		</section>
+	</section>
+	<section id="file">
+		<title>文件操作</title>
+		<section>
+			<title>file_put_contents</title>
+			<screen>
+			
+			</screen>
+			<para>创建文件或覆盖操作</para>
+			<programlisting>
+			<![CDATA[
+<?php
+echo file_put_contents("test.txt", "This is something.");
+?>			
+			]]>
+			</programlisting>
+			<para>追加操作</para>
+			<programlisting>
+			<![CDATA[
+<?php
+file_put_contents("test.txt", "This is another something.", FILE_APPEND);
+?>			
+			]]>
+			</programlisting>
+			
 		</section>
 	</section>
 	<section id="error">
