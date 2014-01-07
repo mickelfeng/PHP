@@ -755,7 +755,7 @@ EOF
 		</screen>
 		<screen>
 $ php -m |grep pthreads
-pthreads		
+pthreads
 		</screen>
 	</section>
 	<section id="mbstring">
@@ -1369,5 +1369,19 @@ EOF
 	<section id="libuv">
 		<title>libuv php extension</title>
 		<para>https://github.com/chobie/php-uv</para>
+	</section>
+	<section id="zeromq">
+		<title>ZeroMQ</title>
+		<screen>
+# yum install zeromq-devel
+# pecl install zmq-beta
+		</screen>
+		<screen>
+		<![CDATA[
+cat > /srv/php/etc/conf.d/zmq.ini <<EOF
+extension=zmq.so
+EOF
+		]]>
+		</screen>
 	</section>
 </chapter>
