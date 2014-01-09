@@ -84,85 +84,7 @@ extension = apc.so
 			</example>
 		</section>
 	</section>
-	<section id="memcache">
-		<title>PHP Memcache</title>
-		<para><link linkend="php">参考PHP安装</link></para>
-		<section>
-			<title>pecl</title>
-			<para>进入PHP工作目录</para>
-			<screen>
-cd /usr/local/php/
-			</screen>
-			<para>安装 memcache</para>
-			<para>pecl install</para>
-			<screen>
-bin/pecl install memcache
-			</screen>
-			<para>php.ini</para>
-			<screen>
-			<![CDATA[
-vi etc/php.ini
 
-extension_dir = "/usr/local/php-5.3.3/lib/php/extensions/"
-extension = memcache.so
-			]]>
-			</screen>
-			<para>php.ini memcache 参数</para>
-			<screen>
-			<![CDATA[
-cat >> /usr/local/php/etc/php.ini <<EOF
-[memcache]
-memcache.allow_failover = 1
-memcache.max_failover_attempts=20
-memcache.chunk_size =8192
-memcache.default_port = 11211
-memcache.default_timeout_ms=30
-EOF
-			]]>
-			</screen>
-		</section>
-		<section id="php5-memcache">
-			<title>apt-get</title>
-			<screen>
-$ sudo apt-get install php5-memcache
-			</screen>
-			<para>memcache.ini 文件</para>
-			<screen>
-$ cat /etc/php5/conf.d/memcache.ini
-; uncomment the next line to enable the module
-extension=memcache.so
-
-[memcache]
-memcache.dbpath="/var/lib/memcache"
-memcache.maxreclevel=0
-memcache.maxfiles=0
-memcache.archivememlim=0
-memcache.maxfilesize=0
-memcache.maxratio=0
-			</screen>
-		</section>
-		<section>
-			<title>example</title>
-			<example>
-				<title>memcache.php</title>
-				<screen>
-				<![CDATA[
-<?php
-	$memcache = new Memcache;
-	$memcache->connect('localhost', 11211) or die ("Could not connect");
-
-	$memcache->set('var_key', 'some really big variable', MEMCACHE_COMPRESSED, 50);
-	echo $memcache->get('var_key');
-?>
-				]]>
-				</screen>
-				<para>运行测试脚本</para>
-				<screen>
-php -q memcache.php
-				</screen>
-			</example>
-		</section>
-	</section>
 
 	<section id="gd">
 		<title>php5-gd - GD module for php5</title>
@@ -227,6 +149,91 @@ vim /srv/php/etc/conf.d/mongo.ini
 extension=mongo.so
 		</screen>
 	</section>
+	
+	<section id="memcache">
+		<title>PHP Memcache</title>
+		<para><link linkend="php">参考PHP安装</link></para>
+		<section>
+			<title>pecl</title>
+			<para>进入PHP工作目录</para>
+			<screen>
+cd /usr/local/php/
+			</screen>
+			<para>安装 memcache</para>
+			<para>pecl install</para>
+			<screen>
+pecl install memcache
+			</screen>
+			<para>php.ini memcache 参数</para>
+			<screen>
+			<![CDATA[
+cat >> /srv/php/etc/php.ini <<EOF
+extension = memcache.so
+[memcache]
+memcache.allow_failover = 1
+memcache.max_failover_attempts=20
+memcache.chunk_size =8192
+memcache.default_port = 11211
+memcache.default_timeout_ms=30
+EOF
+			]]>
+			</screen>
+		</section>
+		<section id="memcached">
+			<title>memcached</title>
+			<screen>
+# yum install libmemcached-devel			
+# pecl install memcached			
+			</screen>
+			<screen>
+			<![CDATA[
+			
+			]]>
+			</screen>
+		</section>
+		<section id="php5-memcache">
+			<title>apt-get</title>
+			<screen>
+$ sudo apt-get install php5-memcache
+			</screen>
+			<para>memcache.ini 文件</para>
+			<screen>
+$ cat /etc/php5/conf.d/memcache.ini
+; uncomment the next line to enable the module
+extension=memcache.so
+
+[memcache]
+memcache.dbpath="/var/lib/memcache"
+memcache.maxreclevel=0
+memcache.maxfiles=0
+memcache.archivememlim=0
+memcache.maxfilesize=0
+memcache.maxratio=0
+			</screen>
+		</section>
+		<section>
+			<title>example</title>
+			<example>
+				<title>memcache.php</title>
+				<screen>
+				<![CDATA[
+<?php
+	$memcache = new Memcache;
+	$memcache->connect('localhost', 11211) or die ("Could not connect");
+
+	$memcache->set('var_key', 'some really big variable', MEMCACHE_COMPRESSED, 50);
+	echo $memcache->get('var_key');
+?>
+				]]>
+				</screen>
+				<para>运行测试脚本</para>
+				<screen>
+php -q memcache.php
+				</screen>
+			</example>
+		</section>
+	</section>	
+	
 	<section id="php-redis">
 		<title>php-redis.x86_64 : Extension for communicating with the Redis key-value store</title>
 		<section>
@@ -234,6 +241,14 @@ extension=mongo.so
 			<screen>
 pecl install redis
 			</screen>
+			<para>php.ini</para>
+			<screen>
+			<![CDATA[
+cat > /srv/php/etc/conf.d/redis.ini <<EOF
+extension=redis.so
+EOF
+			]]>
+			</screen>			
 		</section>
 		<section>
 			<title>yum安装</title>
@@ -1384,4 +1399,23 @@ EOF
 		]]>
 		</screen>
 	</section>
+	<section id="phalcon">
+		<title>Phalcon - High performance PHP framework</title>
+		<screen>
+cd /usr/local/src/
+		
+git clone git://github.com/phalcon/cphalcon.git
+cd cphalcon/build
+./install
+		</screen>
+		<para>配置文件</para>
+		<screen>
+		<![CDATA[
+cat > /srv/php/etc/conf.d/phalcon.ini <<EOF
+extension=phalcon.so
+EOF
+		]]>
+		</screen>		
+	</section>
+	
 </chapter>
