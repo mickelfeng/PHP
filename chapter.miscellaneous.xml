@@ -202,4 +202,9 @@ echo check_id_number('330702198003090915');
 		]]>
 		</programlisting>
 	</section>
+	<section id="tcpdf">
+		<title>PHP PDF 处理库</title>
+		<para>TCPDF is a FLOSS PHP class for generating PDF documents.</para>
+		<para>http://www.tcpdf.org/</para>
+	</section>
 </chapter>
