@@ -1399,6 +1399,19 @@ EOF
 		]]>
 		</screen>
 	</section>
+	<section id="Stomp">
+		<title>Stomp client extension</title>
+		<para>http://stomp.github.io/</para>
+		<screen>
+pecl install stomp
+		</screen>
+		<![CDATA[
+cat > /srv/php/etc/conf.d/stomp.ini <<EOF
+extension=stomp.so
+EOF
+		]]>
+		</screen>
+	</section>
 	<section id="phalcon">
 		<title>Phalcon - High performance PHP framework</title>
 		<screen>
@@ -1417,5 +1430,19 @@ EOF
 		]]>
 		</screen>		
 	</section>
-	
+	<section id="faq">
+		<title>PECL FAQ</title>
+		<section>
+			<title>Cannot install, php_dir for channel "pecl.php.net" is not writeable by the current user</title>
+			<para>查看 php_dir</para>
+			<screen>
+$ pecl config-get php_dir			
+/srv/php-5.5.7/lib/php
+			</screen>
+			<para>修改权限</para>
+			<screen>
+chown root:root -R /srv/php-5.5.7/lib/php 
+			</screen>
+		</section>
+	</section>
 </chapter>
