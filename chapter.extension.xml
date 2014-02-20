@@ -1377,6 +1377,30 @@ EOF
 		]]>
 		</screen>
 	</section>
+	<section id="exif">
+		<title>exif</title>
+		<screen>
+#cd /usr/local/src/php-5.4.8/ext/exif
+
+# phpize 
+Configuring for:
+PHP Api Version:         20100412
+Zend Module Api No:      20100525
+Zend Extension Api No:   220100525
+
+# ./configure --with-php-config=/srv/php-5.4.8/bin/php-config
+
+# make && make install		
+		</screen>
+		<para>ini 配置文件</para>
+		<screen>
+		<![CDATA[
+cat > /srv/php/etc/conf.d/exif.ini <<EOF
+extension=exif.so
+EOF
+		]]>
+		</screen>
+	</section>
 	<section id="plua">
 		<title>Lua for PHP extension</title>
 		<para><ulink url="http://code.google.com/p/plua/" /></para>
