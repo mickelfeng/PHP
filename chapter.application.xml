@@ -189,4 +189,11 @@ if ($data = $cache->get($id)) {
 		]]>
 		</screen>
 	</section>
+	<section id="Net_Socket">
+		<title>Net_Socket</title>
+		<screen>
+pear install Net_Socket		
+		</screen>
+		<para><ulink url="http://pear.php.net/manual/en/package.networking.net-socket.readall.php" /></para>
+	</section>
 </chapter>
