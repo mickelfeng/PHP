@@ -4,7 +4,7 @@
 	<section>
 		<title>常量</title>
 		<section>
-			<title>__FUNCTION__</title>		
+			<title>__FUNCTION__</title>
 			<screen>
 class News{
 
@@ -66,13 +66,45 @@ ntp:x:38:38::/etc/ntp:/sbin/nologin
 nginx:x:498:498:Nginx web server:/var/lib/nginx:/sbin/nologin
 apache:x:48:48:Apache:/var/www:/sbin/nologin
 mysql:x:497:497:MySQL server:/var/lib/mysql:/bin/bash
-www:x:80:80:Web Application:/www:/bin/bash		
+www:x:80:80:Web Application:/www:/bin/bash
 		</programlisting>
 		<para>取一行</para>
 		<programlisting>
 # cat /etc/passwd | php -r 'echo fgets(STDIN);'
-root:x:0:0:root:/root:/bin/bash		
+root:x:0:0:root:/root:/bin/bash
 		</programlisting>
+	</section>
+	<section>
+		<title>Functions (函数)</title>
+		<section>
+			<title>匿名函数（Anonymous functions）</title>
+			<subtitle>匿名函数（Anonymous functions）也叫闭包函数（closures）允许 临时创建一个没有指定名称的函数。</subtitle>
+			<para>闭包函数也可以作为变量的值来使用。</para>
+			<programlisting>
+			<![CDATA[
+<?php
+$put = function($name)
+{
+    printf("%s\r\n", $name);
+};
+
+$put('World');
+$put('PHP');
+?>
+			]]>
+			</programlisting>
+
+			<programlisting>
+			<![CDATA[
+<?php
+$aaa = 111;
+$func = function() use($aaa){ print $aaa; };
+$aaa = 222;
+$func(); // Outputs "111"
+?>
+			]]>
+			</programlisting>
+		</section>
 	</section>
 	<section id="exception">
 		<title>Exception</title>
@@ -227,7 +259,7 @@ foreach (input_parser($input) as $id => $fields) {
         echo "    $item\n";
     }
 }
-?>		
+?>
 		]]>
 		</programlisting>
 		<programlisting>
@@ -240,7 +272,7 @@ function month() {
 }
 
 var_dump(iterator_to_array(month()));
-?>		
+?>
 		]]>
 		</programlisting>
 	</section>
