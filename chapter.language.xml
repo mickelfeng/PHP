@@ -74,7 +74,7 @@ www:x:80:80:Web Application:/www:/bin/bash
 root:x:0:0:root:/root:/bin/bash
 		</programlisting>
 	</section>
-	<section>
+	<section id="functions">
 		<title>Functions (函数)</title>
 		<section>
 			<title>匿名函数（Anonymous functions）</title>
