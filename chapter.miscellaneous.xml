@@ -207,4 +207,8 @@ echo check_id_number('330702198003090915');
 		<para>TCPDF is a FLOSS PHP class for generating PDF documents.</para>
 		<para>http://www.tcpdf.org/</para>
 	</section>
+	<section id="kint">
+		<title>Kint - a modern and powerful PHP debugging helper</title>
+		<para>http://raveren.github.io/kint/</para>
+	</section>
 </chapter>

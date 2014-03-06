@@ -64,21 +64,55 @@ $ pear install pirum/Pirum
 $ php pirum
 		</screen>
 	</section>
-	<section id="phpunit">
-		<title>PHPUnit - Unit testing framework for PHP</title>
-		<procedure>
-			<title>PHPUnit2</title>
-			<step>
-				<para>install</para>
-				<screen>
+<section id="phpunit">
+	<title>PHPUnit - Unit testing framework for PHP</title>
+	<para>pear 安装</para>
+	<procedure>
+		<title>PHPUnit2</title>
+		<step>
+			<para>install</para>
+			<screen>
 pear install PHPUnit2
-				</screen>
-			</step>
-			<step>
-				<para>phpunit your.php</para>
-			</step>
-		</procedure>
-	</section>
+			</screen>
+		</step>
+		<step>
+			<para>phpunit your.php</para>
+		</step>
+	</procedure>
+	<para>手工安装</para>
+	<screen>
+wget https://phar.phpunit.de/phpunit.phar
+chmod +x phpunit.phar
+mv phpunit.phar /usr/local/bin/phpunit
+phpunit --version
+	</screen>
+	<para>测试代码</para>
+	<screen>
+	<![CDATA[
+# cat test.php
+<?php
+
+class Test extends PHPUnit_Framework_TestCase
+{
+  function test1() { $this->assertTrue( 1 + 2  == 3 ); }
+  function test2() { $this->assertTrue( 1 + 1  == 2 ); }
+}
+?>
+	]]>
+	</screen>
+	<para>运行测试脚本</para>
+	<screen>
+# phpunit test.php
+PHPUnit 3.7.32 by Sebastian Bergmann.
+
+..
+
+Time: 40 ms, Memory: 2.50Mb
+
+OK (2 tests, 2 assertions)
+	</screen>
+
+</section>
 	<section id="php-xml-rss">
 		<title>XML_RSS</title>
 		<para>http://pear.php.net/package/XML_RSS</para>
@@ -174,25 +208,25 @@ pear install doctrine/DoctrineORM-2.3.4
 <?php
 require_once('Cache.php');
 
-$cache = new Cache('file', array('cache_dir' => '/tmp/cache/') ); 
+$cache = new Cache('file', array('cache_dir' => '/tmp/cache/') );
 
 $id = $cache->generateID('test');
 
-if ($data = $cache->get($id)) { 
+if ($data = $cache->get($id)) {
     print "Cache hit. Data: $data";
 
-} else { 
-    $data = 'Hello world!!!'; 
-    $cache->save($id, $data); 
-    print 'Cache miss.'; 
-}		
+} else {
+    $data = 'Hello world!!!';
+    $cache->save($id, $data);
+    print 'Cache miss.';
+}
 		]]>
 		</screen>
 	</section>
 	<section id="Net_Socket">
 		<title>Net_Socket</title>
 		<screen>
-pear install Net_Socket		
+pear install Net_Socket
 		</screen>
 		<para><ulink url="http://pear.php.net/manual/en/package.networking.net-socket.readall.php" /></para>
 	</section>
