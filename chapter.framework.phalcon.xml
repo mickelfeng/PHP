@@ -80,4 +80,13 @@ server {
 			<para>二是fastcgi配置location ~ /index.php 这样的设置是为了".php"只能运行 index.php，其他目录下的.php文件无法运行，这样解决的注入与非法脚本运行。</para>
 		</section>
 	</section>
+	<section>
+		<title>dispatcher</title>
+		<para>取当前的控制器、方法，参数</para>
+		<screen>
+$this->dispatcher->getControllerName(),
+$this->dispatcher->getActionName(),
+$this->dispatcher->getParams()	
+		</screen>
+	</section>
 </section>

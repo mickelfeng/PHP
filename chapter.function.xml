@@ -161,16 +161,31 @@ if(PATH_SEPARATOR==':'){
 
 		</programlisting>
 	</section>
-	<section id="strftime">
-		<title>日期比较</title>
-		<programlisting>
-		<![CDATA[
+	<section id="datatime">
+		<title>日期函数</title>
+		<section>
+			<title>strtotime</title>
+			<programlisting>
+$start_date = date("Y-m-d H:i:s", strtotime('next Saturday'));
+$start_week = date("Y-m-d", strtotime("last week"));
+$end_week = date("Y-m-d", strtotime("this week"));
+$sat = strtotime('saturday');
+$start_date = date("Y-m-d H:i:s", strtotime('Saturday'));
+$start = strtotime('2 weeks ago');
+			</programlisting>
+		</section>
+		<section id="strftime">
+			<title>日期比较</title>
+			<programlisting>
+			<![CDATA[
 if(strftime('%Y-%m-%d',strtotime('2009-04-19')) <= date('Y-m-d')){
 	to-do ...
 }
-		]]>
-		</programlisting>
+			]]>
+			</programlisting>
+		</section>
 	</section>
+	
 	<section id="rand">
 		<title>rand()</title>
 		<screen>
