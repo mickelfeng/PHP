@@ -120,6 +120,12 @@ expose_php Off
 		<title>Eclipse PDT</title>
 		<para>http://projects.eclipse.org/projects/tools.pdt</para>
 	</section>
+	<section>
+		<title>内置Web服务器</title>
+		<screen>
+php -S 192.168.2.15:8000 -t /var/www/
+		</screen>
+	</section>
 </chapter>
 	&chapter.language.xml;
 	&chapter.function.xml;

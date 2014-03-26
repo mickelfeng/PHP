@@ -14,7 +14,7 @@
 	]]>
 	</screen>
 	<section id="extension.exampe">
-		<title>Extension Example</title>
+		<title>Extension Example 创建一个扩展</title>
 		<para>下面我们开始分部讲解，首先创建一个扩展。</para>
 		<screen>
 		<![CDATA[

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DocBook" default="All">
+	
+	<property name="dir.docbook.xml" value="${basedir}" />
+	<property name="dir.docbook.xsl" value="${net.sourceforge.dep4e.resources}/docbook-xsl-ns" />
+	<property name="docbook.xml.filename" value="book" />
+	
+	<property name="docbook.xml.language" value="" />
+	
+	<property name="dir.target" value="test" />
+		
+	<import file="${net.sourceforge.dep4e.resources}/ant/docbook_5-0.xml" />
+	
+</project>
