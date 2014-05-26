@@ -754,25 +754,7 @@ EOF
 php -m | grep pcntl
 		</screen>
 	</section>
-	<section id="pthreads">
-		<title>pthreads</title>
-		<para>编译PHP时需要加入 --enable-maintainer-zts 选项才能安装pthreads</para>
-		<screen>
-# pecl install pthread
-		</screen>
-		<para>配置文件</para>
-		<screen>
-		<![CDATA[
-cat > /srv/php-5.5.7/etc/conf.d/pthreads.ini <<EOF
-extension=pthreads.so
-EOF
-		]]>
-		</screen>
-		<screen>
-$ php -m |grep pthreads
-pthreads
-		</screen>
-	</section>
+	&chapter.extension.pthreads.xml;
 	<section id="mbstring">
 		<title>mbstring</title>
 		<screen>

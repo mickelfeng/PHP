@@ -4,6 +4,8 @@
 	<!ENTITY chapter.function.xml	 SYSTEM "chapter.function.xml">
 	<!ENTITY chapter.php.class.xml	 SYSTEM "chapter.php.class.xml">
 	<!ENTITY chapter.extension.xml	 SYSTEM "chapter.extension.xml">
+	<!ENTITY chapter.extension.pthreads.xml	 SYSTEM "chapter.extension.pthreads.xml">
+	
 	<!ENTITY chapter.application.xml SYSTEM "chapter.application.xml">
 	<!ENTITY chapter.framework.xml	 SYSTEM "chapter.framework.xml">
 	<!ENTITY chapter.framework.phalcon.xml	 	SYSTEM "chapter.framework.phalcon.xml">

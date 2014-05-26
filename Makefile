@@ -3,7 +3,7 @@ WORKSPACE=~/workspace
 PROJECT=PHP
 DOCBOOK=php
 PUBLIC_HTML=~/public_html
-HTMLHELP=$(PUBLIC_HTML)/htmlhelp/$(DOCBOOK)/chm
+HTMLHELP=~/htmlhelp/$(DOCBOOK)/chm
 
 DSSSL=../docbook-xsl/docbook.xsl
 TMPDIR = $(shell mktemp -d --suffix=.tmp -p /tmp docbook.html.XXXXXX)
