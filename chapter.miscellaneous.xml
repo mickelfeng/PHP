@@ -211,4 +211,8 @@ echo check_id_number('330702198003090915');
 		<title>Kint - a modern and powerful PHP debugging helper</title>
 		<para>http://raveren.github.io/kint/</para>
 	</section>
+	<section id="snoopy">
+		<title>snoopy 模拟浏览器操作</title>
+		<para>http://snoopy.sourceforge.net/</para>
+	</section>
 </chapter>
