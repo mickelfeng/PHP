@@ -1,6 +1,5 @@
-<chapter id="php.install">
-	<title>install and configure</title>
-
+<chapter id="php.install"><?dbhtml dir="cli"?>
+	<title>PHP</title>
 	<info>
 		<keywordset>
 
@@ -39,17 +38,55 @@
 
 		</keywordset>
 	</info>
-
-	<command>$ sudo apt-get install php5</command>
-	<screen>
+	
+	<section id="php.install">
+		<title>install and configure</title>
+		<command>$ sudo apt-get install php5</command>
+		<screen>
 $ sudo apt-get install php5 php5-cli
-	</screen>
-	<para>fastcgi</para>
-	<screen>
+		</screen>
+		<para>fastcgi</para>
+		<screen>
 sudo apt-get install php5
 sudo apt-get install php5-cli
 sudo apt-get install php5-fpm
-	</screen>
+		</screen>
+	</section>
+	<chapter id="php">
+		<title>php 命令</title>
+		<section>
+			<title>-c &lt;path&gt;|&lt;file&gt; Look for php.ini file in this directory</title>
+			<subtitle>指定php.ini文件</subtitle>
+			<screen>
+php -c /etc/php/cli/php.ini -f test.php
+			</screen>
+		</section>
+		<section>
+			<title>--ini            Show configuration file names</title>
+			<subtitle>显示配置文件名</subtitle>
+			<screen>
+$ php --ini
+Configuration File (php.ini) Path: /etc/php5/cli
+Loaded Configuration File:         /etc/php5/cli/php.ini
+Scan for additional .ini files in: /etc/php5/cli/conf.d
+Additional .ini files parsed:      /etc/php5/cli/conf.d/05-opcache.ini,
+/etc/php5/cli/conf.d/10-pdo.ini,
+/etc/php5/cli/conf.d/20-curl.ini,
+/etc/php5/cli/conf.d/20-json.ini,
+/etc/php5/cli/conf.d/20-readline.ini
+
+# php --ini
+Configuration File (php.ini) Path: /srv/php-5.5.13/etc
+Loaded Configuration File:         /srv/php-5.5.13/etc/php.ini
+Scan for additional .ini files in: /srv/php-5.5.13/etc/conf.d
+Additional .ini files parsed:      /srv/php-5.5.13/etc/conf.d/amqp.ini,
+/srv/php-5.5.13/etc/conf.d/pthreads.ini,
+/srv/php-5.5.13/etc/conf.d/redis.ini,
+/srv/php-5.5.13/etc/conf.d/safenet.ini,
+/srv/php-5.5.13/etc/conf.d/xdebug.ini
+			</screen>
+		</section>
+	</chapter>
 	<section id="php.ini">
 		<title>php.ini</title>
 		<section>
@@ -120,45 +157,10 @@ expose_php Off
 		<title>Eclipse PDT</title>
 		<para>http://projects.eclipse.org/projects/tools.pdt</para>
 	</section>
-	<section>
+	<section id="php.server">
 		<title>内置Web服务器</title>
 		<screen>
 php -S 192.168.2.15:8000 -t /var/www/
-		</screen>
-	</section>
-</chapter>
-<chapter id="php">
-	<title>php 命令</title>
-	<section>
-		<title>-c <path>|<file> Look for php.ini file in this directory</title>
-		<subtitle>指定php.ini文件</subtitle>
-		<screen>
-php -c /etc/php/cli/php.ini -f test.php
-		</screen>
-	</section>
-	<section>
-		<title>--ini            Show configuration file names</title>
-		<subtitle>显示配置文件名</subtitle>
-		<screen>
-$ php --ini
-Configuration File (php.ini) Path: /etc/php5/cli
-Loaded Configuration File:         /etc/php5/cli/php.ini
-Scan for additional .ini files in: /etc/php5/cli/conf.d
-Additional .ini files parsed:      /etc/php5/cli/conf.d/05-opcache.ini,
-/etc/php5/cli/conf.d/10-pdo.ini,
-/etc/php5/cli/conf.d/20-curl.ini,
-/etc/php5/cli/conf.d/20-json.ini,
-/etc/php5/cli/conf.d/20-readline.ini
-
-# php --ini
-Configuration File (php.ini) Path: /srv/php-5.5.13/etc
-Loaded Configuration File:         /srv/php-5.5.13/etc/php.ini
-Scan for additional .ini files in: /srv/php-5.5.13/etc/conf.d
-Additional .ini files parsed:      /srv/php-5.5.13/etc/conf.d/amqp.ini,
-/srv/php-5.5.13/etc/conf.d/pthreads.ini,
-/srv/php-5.5.13/etc/conf.d/redis.ini,
-/srv/php-5.5.13/etc/conf.d/safenet.ini,
-/srv/php-5.5.13/etc/conf.d/xdebug.ini
 		</screen>
 	</section>
 </chapter>
